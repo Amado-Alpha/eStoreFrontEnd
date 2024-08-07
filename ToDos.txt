@@ -1,0 +1,90 @@
+Tasks
+1. Products carousel
+2. Partners section
+3. Projects page
+4. General products page
+5. 
+
+concepts
+1. w-10/12
+2. 
+
+
+CHARGES
+1. One month of FREE site maintenance after purchase.
+2. 
+
+
+			FIXES
+
+                       FRONT-END
+
+1. For the button that says view all products, it should be swinging to engage users.
+2. Get rid of the search icon on the navbar (It makes sense to have it only in the products page,
+   so that customers can search for products). The searching can be structured to allow searching for
+   categories and also custom searches. (This is better implemented after we have full loaded the data
+   from the server).
+
+
+3. Add a phone number and social media links on top of the navbar, that will be hidden as we scroll
+    down, but reshown again when we attempt to scroll up.
+
+4. Section headers shouldn't be too bright (Hint: You can use gray-500)
+5. Look into transition options for image slider (especially the projects showcase section)
+
+6. In the forms that will involve uploading a picture, implement a logic that will check the size of
+    the picture. It shouldn't be too small or too large in size (meaning width and length) so as not
+    to mess up the layout.
+7. CAROUSEL size should be decreased for mobile phones.
+8. Add formatting to the price column of the products (Amounts should be comma separated eg. 15,000)
+9. Test validation for all forms.
+
+10. Error handling in the adding project part
+   1. A user should be allowed to add a project without features and an error shouldn't be thrown out
+11. 
+
+FINITO!!!
+
+                        BACK-END
+1. There is a multi-valued field(technologies) in the projects table (That's a poor design)
+2. Create a testimonials table.
+3. Get rid of the technologies in the projects table, NO NEED FOR 'EM.
+4. Create the team members table for about us page.
+5. Create An admin panel that you can use to update all the details.
+   i) An admin should be able to create another admin.
+   ii) When you hit the register user endpoint, the token generated should be relayed to the
+       frontend logic so that it's included in the code that accesses the authourized endpoints.
+       Because right now the work to do so is quite manual.
+
+PAGES
+1. Services
+2. Products
+3. Projects
+5. About us
+
+
+DESIGN PRINCIPLES FOR FRONT-END (MY OWN OBSERVATION)
+1. Use consitent font for all sections (Use a font that's well readable as well).
+2. 
+
+TO LEARN
+1. Studying about image containers (How to style them accordingly).
+2. The following is how sactum configuration looks like for local host, investigate how it should loo
+   k like in a hosted site.
+
+   'stateful' => explode(',', env('SANCTUM_STATEFUL_DOMAINS', sprintf(
+        '%s%s',
+        'localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,::1',
+        Sanctum::currentApplicationUrlWithPort()
+    ))),
+
+3. For the amount of time i have wasted trying to fight the sidebar, a tutorial on sidebars with vue a
+   and tailwind is SOOOO important.
+
+
+TIPS FOR ARTICLE
+1. Writing an article on how to do a registration and login from vue js front end.
+   TIPS
+   1. Create controllers in the laravel backend.
+   2. Go to cors.php in this route config/cors.php and edit required parameters.
+   3. Implement login and register screens on the vue js front end.
