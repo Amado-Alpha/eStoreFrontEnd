@@ -41,7 +41,10 @@ CHARGES
 
 10. Error handling in the adding project part
    1. A user should be allowed to add a project without features and an error shouldn't be thrown out
-11. 
+11. Improve the user alerts in case of error (Because right now, there are things like alerts which are
+   not really user friendly).
+12. Which is the best place to store your error handling logic.
+13. Scroll triggered animations.
 
 FINITO!!!
 
@@ -55,6 +58,7 @@ FINITO!!!
    ii) When you hit the register user endpoint, the token generated should be relayed to the
        frontend logic so that it's included in the code that accesses the authourized endpoints.
        Because right now the work to do so is quite manual.
+
 
 PAGES
 1. Services
@@ -80,6 +84,7 @@ TO LEARN
 
 3. For the amount of time i have wasted trying to fight the sidebar, a tutorial on sidebars with vue a
    and tailwind is SOOOO important.
+4. The concept of route model binding.
 
 
 TIPS FOR ARTICLE
