@@ -107,38 +107,6 @@ const onFileChange = (e) => {
     image.value = files[0];
 };
 
-const uploadImage = async () => {
-    if (!image.value) return;
-
-    try {
-        const imageUrlFromCloudinary = await store.dispatch('products/uploadImage', image.value);
-
-        if (imageUrlFromCloudinary) {
-            const product = {
-                name: productName.value,
-                description: productDescription.value,
-                price: productPrice.value,
-                categoryName: productCategory.value,
-                imageUrl: imageUrlFromCloudinary
-            };
-
-            //Resetting form
-            productName.value = '';
-            productDescription.value = '';
-            productPrice.value = '';
-            productCategory.value = '';
-            image.value = null;
-            if (imageUploadInput.value) {
-                imageUploadInput.value.value = '';
-            }
-
-            //Adding product to the state
-            await store.dispatch('products/addProduct', product);
-        }
-    } catch (error) {
-        console.error(error);
-    }
-};
 
 const updateProduct = async () => {
     uploading.value = true;

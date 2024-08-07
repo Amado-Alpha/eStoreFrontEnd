@@ -4,18 +4,18 @@ import axiosClient from '../../axios';
 import uploadImageToCloudinary from '../../services/cloudinaryClient';
 
 // Mutation types
-export const SET_PRODUCT = 'SET_PRODUCT';
+export const SET_TESTIMONIAL = 'SET_TESTIMONIAL';
 export const SET_UPLOAD_SUCCESS = 'SET_UPLOAD_SUCCESS';
 export const SET_UPLOADING = 'SET_UPLOADING';
 export const SET_UPLOAD_ERROR = 'SET_UPLOAD_ERROR';
-export const SET_PRODUCTS = 'SET_PRODUCTS';
+export const SET_TESTIMONIALS = 'SET_TESTIMONIALS';
 export const SET_LOADING = 'SET_LOADING';
 export const SET_SERVER_ERROR = 'SET_SERVER_ERROR';
-export const DELETE_PROJECT = 'DELETE_PROJECT';
-export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
+export const DELETE_TESTIMONIAL = 'DELETE_TESTIMONIAL';
+export const UPDATE_TESTIMONIAL = 'UPDATE_TESTIMONIAL';
 
 const state = {
-  products: [],
+  testimonials: [],
   uploadSuccess: false,
   uploadError: null,
   uploading: false,
@@ -24,28 +24,30 @@ const state = {
 };
 
 const getters = {
-  products: (state) => state.products,
+  testimonials: (state) => state.testimonials,
   error: (state) => state.error,
 };
 
 const mutations = {
-  [SET_PRODUCT]: (state, product) => state.products.push(product),
-  [SET_PRODUCTS]: (state, products) => (state.products = products),
+  [SET_TESTIMONIAL]: (state, testimonial) =>
+    state.testimonials.push(testimonial),
+  [SET_TESTIMONIALS]: (state, testimonials) =>
+    (state.testimonials = testimonials),
   [SET_UPLOADING]: (state, uploading) => (state.uploading = uploading),
   [SET_UPLOAD_ERROR]: (state, error) => (state.uploadError = error),
   [SET_SERVER_ERROR]: (state, error) => (state.serverError = error),
   [SET_UPLOAD_SUCCESS]: (state, success) => (state.uploadSuccess = success),
   [SET_LOADING]: (state, loading) => (state.loading = loading),
-  [UPDATE_PRODUCT]: (state, updatedProduct) => {
-    const index = state.products.findIndex(
-      (product) => product.id === updatedProduct.id
+  [UPDATE_TESTIMONIAL]: (state, updatedTestimonial) => {
+    const index = state.testimonials.findIndex(
+      (testimonial) => testimonial.id === updatedTestimonial.id
     );
     if (index !== -1) {
-      state.products.splice(index, 1, updatedProduct);
+      state.testimonials.splice(index, 1, updatedTestimonial);
     }
   },
-  [DELETE_PROJECT]: (state, productId) =>
-    state.products.filter((product) => product.id !== productId),
+  [DELETE_TESTIMONIAL]: (state, testimonialId) =>
+    state.testimonials.filter((testimonial) => testimonial.id !== testimonialId),
 };
 
 const actions = {
@@ -73,26 +75,29 @@ const actions = {
     }
   },
 
-  // Adding new product to server and commiting it to state
-  async addProduct({ commit }, product) {
+  // Adding new testimonial to server and commiting it to state
+  async addTestimonial({ commit }, testimonial) {
     try {
-      const res = await axiosClient.post('/products', product);
-      commit('SET_PRODUCT', product);
+      const res = await axiosClient.post('/testimonials', testimonial);
+      commit('SET_TESTIMONIAL', testimonial);
       const {
         data: { data },
       } = res;
       return data;
     } catch (error) {
-      commit('SET_SERVER_ERROR', 'Failed to add product details to server.');
+      commit(
+        'SET_SERVER_ERROR',
+        'Failed to add testimonial details to server.'
+      );
       console.error(error);
       throw error;
     }
   },
 
-  // Retrieving a product
-  async getProduct({ commit }, productId) {
+  // Retrieving a testimonial
+  async getTestimonial({ commit }, testimonialId) {
     try {
-      const response = await axiosClient.get(`/products/${productId}`);
+      const response = await axiosClient.get(`/testimonials/${testimonialId}`);
 
       const {
         data: { data },
@@ -100,34 +105,37 @@ const actions = {
 
       return data;
     } catch (error) {
-      commit('SET_SERVER_ERROR', 'Failed to retrieve product from server.');
+      commit('SET_SERVER_ERROR', 'Failed to retrieve testimonial from server.');
       console.log(error);
       throw error;
     }
   },
 
-  // Updating a product to server and commiting it to state
-  async updateProduct({ commit }, { id, product }) {
+  // Updating a testimonial to server and commiting it to state
+  async updateTestimonial({ commit }, { id, testimonial }) {
     try {
-      const res = await axiosClient.put(`/products/${id}`, product);
+      const res = await axiosClient.put(`/testimonials/${id}`, testimonial);
       console.log('RESPONSE:', res);
-      commit('SET_PRODUCT', product);
+      commit('SET_TESTIMONIAL', testimonial);
       const {
         data: { data },
       } = res;
       return data;
     } catch (error) {
-      commit('SET_UPLOAD_ERROR', 'Failed to add product details to server.');
+      commit(
+        'SET_UPLOAD_ERROR',
+        'Failed to add testimonial details to server.'
+      );
       console.error(error);
       throw error;
     }
   },
 
-  // Fetching products from server and commiting them to state
-  async fetchProducts({ commit }) {
+  // Fetching testimonials from server and commiting them to state
+  async fetchTestimonials({ commit }) {
     commit(SET_LOADING, true);
     try {
-      const response = await axiosClient.get('/products');
+      const response = await axiosClient.get('/testimonials');
 
       // console.log(response.data.data);
       //Destructuring
@@ -137,7 +145,7 @@ const actions = {
 
       // console.log('PRODUCTS:', data);
 
-      commit(SET_PRODUCTS, data);
+      commit(SET_TESTIMONIALS, data);
     } catch (error) {
       commit(SET_ERROR, error);
     } finally {

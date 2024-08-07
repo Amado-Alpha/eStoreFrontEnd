@@ -1,9 +1,3 @@
-/**
- * I'm importing axios two times because, there's an axios configuration with base url already
- * , and another import doesn't have any predefined configs from my app, that i will use to up
- * load an image to cloudinary.
- */
-
 // The one with configs
 import apiClient from '../../services/authService';
 
@@ -108,10 +102,6 @@ const actions = {
 
   async fetchUsers({ commit }) {
     commit(SET_LOADING, true);
-
-    // console.log(response.data.data);
-    //Destructuring
-
     try {
       const response = await apiClient.get('/users');
       console.log('Fetching users...');

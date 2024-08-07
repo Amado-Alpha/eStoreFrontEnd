@@ -44,7 +44,13 @@ CHARGES
 11. Improve the user alerts in case of error (Because right now, there are things like alerts which are
    not really user friendly).
 12. Which is the best place to store your error handling logic.
-13. Scroll triggered animations.
+13. Scroll triggered animations (ref. Tigo Tz official website)
+14. Find an amazing alternative to a carousel (That will so nice and engaging).
+15. Table pagination buttons should be visible only when the items > itemsPerPage
+16. The forms in the admin pages should be hidden, on clicking a button should they be visible.
+
+EXTRAS (OPTIONAL)
+15. Special announcement section. (This weekend offer)
 
 FINITO!!!
 
