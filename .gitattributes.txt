@@ -1,0 +1,29 @@
+# Ensure all text files use LF line endings in the repository
+* text=auto
+
+# Explicitly define line endings for specific file types
+*.vue text eol=lf
+*.js text eol=lf
+*.ts text eol=lf
+*.json text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.scss text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.xml text eol=lf
+
+# Ensure line endings are handled correctly for specific binary files
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.gif binary
+*.ico binary
+*.svg binary
+
+# Handle files with varying line endings
+*.bat text eol=crlf
+*.sh text eol=lf
+
+# Avoid Git converting line endings for certain files
+*.lock text eol=lf
