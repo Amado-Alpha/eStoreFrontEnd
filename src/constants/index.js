@@ -195,6 +195,7 @@ export const data = {
     { href: { path: '/services' }, label: 'SERVICES' },
     { href: { path: '/contacts' }, label: 'CONTACTS' },
     { href: { path: '/products' }, label: 'PRODUCTS' },
+    { href: { path: '/hero' }, label: 'HERO' },
     // { href: { path: "/ContactUs", hash: "#contact-us" }, label: "Contact Us" },
   ],
 
