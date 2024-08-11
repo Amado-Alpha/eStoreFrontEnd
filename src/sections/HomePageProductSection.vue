@@ -9,7 +9,7 @@
             </p>
         </div>
         <swiper :slidesPerView="1" :spaceBetween="20" :loop="true" :pagination="{ clickable: true }" :navigation="false"
-            :autoplay="{ delay: 5000, disableOnInteraction: false }" :breakpoints="breakpoints" :modules="modules"
+            :autoplay="{ delay: 3000, disableOnInteraction: false }" :breakpoints="breakpoints" :modules="modules"
             class="mySwiper">
             <swiper-slide v-for="(product, index) in products" :key="index"
                 class="product-slide p-8 bg-gray-100 rounded-lg">
