@@ -1,5 +1,5 @@
 <template>
-    <section class="font-roboto bg-cover bg-center text-white py-48 relative"
+    <section class="font-roboto bg-cover bg-center bg-fixed text-white py-48 relative"
         :style="{ backgroundImage: `url(${backgroundImage})` }">
         <div class="absolute inset-0 bg-green-900 opacity-50"></div>
         <div class="container mx-auto text-center relative z-10 mt-10">

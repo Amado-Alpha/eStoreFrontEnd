@@ -1,8 +1,8 @@
 <template>
     <div class="container mx-auto mt-8 font-roboto">
         <div class="md:w-1/2 mx-auto">
-            <form @submit.prevent="updateProjectm" class="bg-white shadow-lg rounded-lg p-8">
-                <h2 class="text-2xl font-bold mb-6 text-center">Edit Project</h2>
+            <form @submit.prevent="updateProject" class="bg-white shadow-lg rounded-lg p-8">
+                <h2 class="text-2xl font-bold mb-6 text-center">Edit project details</h2>
                 <div class="mb-4">
                     <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Project Title</label>
                     <input v-model="projectTitle" type="text" placeholder="Enter project title" required id="name"
@@ -49,32 +49,37 @@
                 </div>
                 <div class="text-center">
                     <button type="submit"
-                        class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
-                        {{ uploading ? 'Updating...' : 'Update!' }}
+                        class="bg-green-600 hover:bg-green-700 w-full text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                        {{ uploading ? 'Updating...' : 'Submit' }}
                     </button>
-                    <p v-if="uploadError" class="text-red-500 text-xs italic mt-2">{{ uploadError }}</p>
-                    <p v-if="uploadSuccess" class="text-green-500 text-xs italic mt-2">Project updated successfully!</p>
                 </div>
             </form>
         </div>
     </div>
+    <AdminFooter />
 </template>
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
+import { useToast } from 'vue-toastification';
+
+import AdminFooter from '../components/AdminFooter.vue';
 
 const store = useStore();
 const router = useRouter();
+const toast = useToast();
 
 const projectTitle = ref('');
 const projectDescription = ref('');
 const selectedFeatures = ref([]);
 const image = ref(null);
+
 const uploading = ref(false);
 const uploadError = ref(null);
-const uploadSuccess = ref(null);
+const uploadSuccess = ref(false);
+
 const features = computed(() => store.state.features.features);
 
 // Retrieving project id from route via props
@@ -86,7 +91,6 @@ const props = defineProps({
 });
 
 // console.log('ID passed as props:', props.id)
-
 const projectId = props.id;
 
 const fetchProject = async () => {
@@ -96,6 +100,13 @@ const fetchProject = async () => {
     selectedFeatures.value = project.features.map(feature => feature);
 };
 
+// Store dispatches
+const fetchFeatures = async () => {
+    await store.dispatch('features/fetchFeatures');
+}
+const fetchProjects = async () => {
+    store.dispatch('projects/fetchProjects');
+}
 /**
  * FEATURES FORM FIELD LOGIC
  */
@@ -174,54 +185,38 @@ const updateProject = async () => {
 
             // console.log('Edit project PAYLOAD:', project);
             await store.dispatch('projects/updateProject', { id: projectId, project });
-
             uploadSuccess.value = true;
+            toast.success('Project updated successfully');
             router.push({ name: 'admin.projects' });
         }
         // A user might not need to update an image
         else {
-
-
-            const currentProject = await store.dispatch('projects/getProject', projectId);
-
+            // const currentProject = await store.dispatch('projects/getProject', projectId);
             const project = {
                 title: projectTitle.value,
                 description: projectDescription.value,
-                imageUrl: currentProject.imageUrl,
                 features: selectedFeaturesIds.value
             };
 
-            console.log('Project to be added:', project);
+            // console.log('Project to be added:', project);
             await store.dispatch('projects/updateProject', { id: projectId, project });
             uploadSuccess.value = true;
-            // router.push({ name: 'admin.projects' });
+            toast.success('Project updated succesfully');
+            router.push({ name: 'admin.projects' });
         }
     } catch (error) {
         uploadError.value = 'An error occurred while updating the project.';
+        toast.error('Project updating failed!');
+        console.error(error);
     } finally {
         uploading.value = false;
     }
 }
 
-const updateProjectm = async () => {
-    const currentProject = await store.dispatch('projects/getProject', projectId);
-
-    const project = {
-        title: projectTitle.value,
-        description: projectDescription.value,
-        imageUrl: currentProject.imageUrl,
-        features: selectedFeaturesIds.value
-    };
-
-    console.log('Project to be added:', project);
-    await store.dispatch('projects/updateProject', { id: projectId, project });
-    uploadSuccess.value = true;
-}
-
-
 // Fetch features and project details on component mount
-onMounted(async () => {
-    await store.dispatch('features/fetchFeatures');
-    await fetchProject();
+onMounted(() => {
+    fetchFeatures();
+    fetchProject();
+    fetchProjects();
 });
 </script>

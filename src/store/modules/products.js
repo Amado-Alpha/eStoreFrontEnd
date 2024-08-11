@@ -110,7 +110,6 @@ const actions = {
   async updateProduct({ commit }, { id, product }) {
     try {
       const res = await axiosClient.put(`/products/${id}`, product);
-      console.log('RESPONSE:', res);
       commit('SET_PRODUCT', product);
       const {
         data: { data },
@@ -137,11 +136,11 @@ const actions = {
 
       // console.log('PRODUCTS:', data);
 
-      commit(SET_PRODUCTS, data);
+      commit('SET_PRODUCTS', data);
     } catch (error) {
-      commit(SET_ERROR, error);
+      commit('SET_ERROR', error);
     } finally {
-      commit(SET_LOADING, false);
+      commit('SET_LOADING', false);
     }
   },
 };

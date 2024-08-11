@@ -9,12 +9,13 @@
                         class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                         v-if="isSmallScreen">
                         <span class="sr-only">Open sidebar</span>
-                        <i :class="isSidebarOpen ? 'fa-solid fas fa-window-close' : 'fa-solid fas fa-bars'"></i>
+                        <i
+                            :class="isSidebarOpen ? 'fa-solid fas fa-window-close bg-red-600 text-white' : 'fa-solid fas fa-bars'"></i>
                     </button>
                     <a href="https://flowbite.com" class="flex ms-2 md:me-24">
                         <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 me-3" alt="FlowBite Logo" />
                         <span
-                            class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Flowbite</span>
+                            class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Mtonix</span>
                     </a>
                 </div>
 
@@ -25,7 +26,7 @@
                             <button @click="toggleProfileMenu" class="focus:outline-none flex items-center">
                                 <img class="h-8 w-8 rounded-full object-cover" src="https://via.placeholder.com/150"
                                     alt="User avatar">
-                                <span class="ml-2 text-gray-700 font-semibold">John Doe</span>
+                                <span class="ml-2 text-gray-700 font-semibold">Admin</span>
                                 <svg class="h-5 w-5 text-gray-700 ml-2" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -34,8 +35,8 @@
                             </button>
                             <div v-if="isProfileMenuOpen"
                                 class="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg py-1 z-20">
-                                <a href="#"
-                                    class="block px-4 py-2 text-gray-800 font-semibold hover:bg-gray-100 hover:font-bold">Logout</a>
+                                <a @click="logout"
+                                    class="block px-4 py-2 text-gray-800 font-semibold hover:bg-gray-100 hover:font-bold cursor-pointer">Logout</a>
                             </div>
                         </div>
                     </div>
@@ -54,7 +55,7 @@
                     <router-link :to="{ name: menuItem.link }"
                         class="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <div
-                            class="w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">
+                            class="w-5 h-5 text-gold transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">
                             <i :class="menuItem.icon"></i>
                         </div>
                         <span
@@ -76,7 +77,7 @@
                     <router-link :to="{ name: menuItem.link }" @click="toggleSidebar"
                         class="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <div
-                            class="w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">
+                            class="w-5 h-5 text-gold transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">
                             <i :class="menuItem.icon"></i>
                         </div>
                         <span
@@ -89,8 +90,8 @@
     </aside>
 
     <!-- Main Content -->
-    <div class="p-4 md:ml-64 bg-gray-100">
-        <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
+    <div class=" md:ml-64 bg-gray-100">
+        <div class=" border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
             <router-view />
         </div>
     </div>
@@ -98,6 +99,24 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { useRouter } from 'vue-router';
+import { useToast } from 'vue-toastification';
+import { useStore } from 'vuex';
+
+const store = useStore();
+const toast = useToast();
+const router = useRouter();
+
+const logout = async () => {
+    try {
+        await store.dispatch('users/logout');
+        router.push({ name: 'admin.login' })
+        toast.success('Logout successful')
+    } catch (error) {
+        toast.error('Logout failed!');
+        console.error('Error during logout', error);
+    }
+};
 
 // Sidebar state
 const isSidebarOpen = ref(false);
@@ -132,15 +151,13 @@ onBeforeUnmount(() => {
     window.removeEventListener('resize', handleResize);
 });
 
-const menuItems = [
-    { name: 'Home', link: 'admin.home', icon: 'fa-solid fas fa-home' },
-    { name: 'Products', link: 'admin.products', icon: 'fa-solid fas fa-home' },
-    { name: 'Projects', link: 'admin.projects', icon: 'fa-solid fas fa-home' },
-    { name: 'Users', link: 'admin.users', icon: 'fa-solid fas fa-home' },
-    { name: 'Testimonials', link: 'admin.testimonials', icon: 'fa-solid fas fa-home' },
-];
-</script>
 
-<style>
-/* Optional: You can add styles here */
-</style>
+const menuItems = [
+    { name: 'Dashboard', link: 'admin.home', icon: 'fa-solid fas fa-home' },
+    { name: 'Products', link: 'admin.products', icon: 'fa-solid fas fa-box-open' },
+    { name: 'Projects', link: 'admin.projects', icon: 'fa-solid fas fa-project-diagram' },
+    { name: 'Users', link: 'admin.users', icon: 'fa-solid fas fa-users' },
+    { name: 'Testimonials', link: 'admin.testimonials', icon: 'fa-solid fas fa-comments' },
+];
+
+</script>

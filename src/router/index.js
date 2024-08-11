@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import store from '../store';
 
 // Main site related imports
 import WebsiteLayout from '../layouts/WebsiteLayout.vue';
@@ -12,17 +13,18 @@ import ContactsPage from '../sections/ContactsPage.vue';
 // Admin related imports
 import AdminLayout from '../layouts/AdminLayout.vue';
 
-import Users from '../views/admin/Users.vue';
-import AdminHome from '../views/admin/AdminHome.vue';
-import AdminProducts from '../views/admin/AdminProducts.vue';
-import AdminProjects from '../views/admin/AdminProjects.vue';
-import AdminTestimonials from '../views/admin/AdminTestimonials.vue';
-import AdminLogin from '../views/admin/AdminLogin.vue';
-import AdminRegister from '../views/admin/AdminRegister.vue';
-import AdminEditProject from '../views/admin/AdminEditProject.vue';
-import AdminEditProduct from '../views/admin/AdminEditProduct.vue';
-import AdminEditUser from '../views/admin/AdminEditUser.vue';
-import AdminEditTestimonial from '../views/admin/AdminEditTestimonial.vue';
+import AdminTestimonialEdit from '../views/admin/Testimonials/AdminTestimonialEdit.vue';
+import AdminProjectEdit from '../views/admin/Projects/AdminProjectEdit.vue';
+import AdminProductEdit from '../views/admin/Products/AdminProductEdit.vue';
+import AdminUserEdit from '../views/admin/Users/AdminUserEdit.vue';
+import AdminUsers from '../views/admin/Users/AdminUsers.vue';
+import AdminDashboard from '../views/admin/components/AdminDashboard.vue';
+import AdminProducts from '../views/admin/Products/AdminProducts.vue';
+import AdminProjects from '../views/admin/Projects/AdminProjects.vue';
+import AdminTestimonials from '../views/admin/Testimonials/AdminTestimonials.vue';
+import AdminRegister from '../views/admin/Users/AdminRegister.vue';
+import AdminLogin from '../views/admin/Users/AdminLogin.vue';
+import HeroSection from '../components/HeroSection.vue';
 
 const routes = [
   {
@@ -33,6 +35,11 @@ const routes = [
         path: '',
         name: 'home',
         component: Home,
+      },
+      {
+        path: 'hero',
+        name: 'hero',
+        component: HeroSection,
       },
       {
         path: 'about',
@@ -69,29 +76,24 @@ const routes = [
       {
         path: 'home',
         name: 'admin.home',
-        component: AdminHome,
+        component: AdminDashboard,
       },
 
       // Users
       {
         path: 'register',
-        name: 'admin.egister',
+        name: 'admin.register',
         component: AdminRegister,
-      },
-      {
-        path: 'login',
-        name: 'admin.login',
-        component: AdminLogin,
       },
       {
         path: 'users',
         name: 'admin.users',
-        component: Users,
+        component: AdminUsers,
       },
       {
-        path: 'edit-user/:id/edit',
+        path: 'edit-user/:id?/edit',
         name: 'admin.edit-user',
-        component: AdminEditUser,
+        component: AdminUserEdit,
         props: true,
       },
 
@@ -102,17 +104,17 @@ const routes = [
         component: AdminProducts,
       },
       {
-        path: 'edit-product/:id/edit',
+        path: 'edit-product/:id?/edit',
         name: 'admin.edit-product',
-        component: AdminEditProduct,
+        component: AdminProductEdit,
         props: true,
       },
 
       // Projects
       {
-        path: 'edit-project/:id/edit',
+        path: 'edit-project/:id?/edit',
         name: 'admin.edit-project',
-        component: AdminEditProject,
+        component: AdminProjectEdit,
         props: true, // Pass route params as props to the component
       },
       {
@@ -128,12 +130,17 @@ const routes = [
         component: AdminTestimonials,
       },
       {
-        path: 'edit-testimonial/:id/edit',
+        path: 'edit-testimonial/:id?/edit',
         name: 'admin.edit-testimonial',
-        component: AdminEditTestimonial,
+        component: AdminTestimonialEdit,
         props: true,
       },
     ],
+  },
+  {
+    path: '/admin/login',
+    name: 'admin.login',
+    component: AdminLogin,
   },
 ];
 
@@ -160,6 +167,29 @@ const router = createRouter({
   scrollBehavior() {
     return { top: 0 };
   },
+});
+
+// Navigation guard to protect admin routes
+router.beforeEach((to, from, next) => {
+  const isAdminRoute =
+    to.path.startsWith('/admin') && to.name !== 'admin.login';
+
+  // Check if the user is authenticated using !!
+  const isAuthenticated = !!store.state.users.authToken;
+
+  if (isAuthenticated && to.name === 'admin.login') {
+    next({ name: 'admin.home' });
+  } else if (isAdminRoute && !isAuthenticated && to.name != 'admin.login') {
+    next({ name: 'admin.login' });
+  } else {
+    next();
+  }
+
+  // if (isAdminRoute && !isAuthenticated) {
+  //   next({ name: 'admin.login' }); // Redirect to login if not authenticated
+  // } else {
+  //   next(); // Allow navigation if authenticated or not an admin route
+  // }
 });
 
 export default router;

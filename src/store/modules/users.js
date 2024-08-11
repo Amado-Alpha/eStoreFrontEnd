@@ -9,7 +9,7 @@ export const SET_ERROR = 'SET_ERROR';
 export const SET_SERVER_ERROR = 'SET_SERVER_ERROR';
 export const DELETE_USER = 'DELETE_USER';
 export const UPDATE_USER = 'UPDATE_USER';
-export const SET_AUTH_USER = 'SET_AUTH_TOKEN';
+export const SET_AUTH_USER = 'SET_AUTH_USER';
 export const SET_AUTH_TOKEN = 'SET_AUTH_TOKEN';
 
 const state = {
@@ -67,10 +67,6 @@ const actions = {
     console.log('User ID:', userId);
     try {
       const response = await apiClient.get(`/users/${userId}`);
-
-      // const {
-      //     data: { data },
-      // } = response;
       const {
         data: { data },
       } = response;
@@ -125,7 +121,7 @@ const actions = {
   // Authentication actions
   async login({ commit }, credentials) {
     try {
-      const res = await authService.login(credentials);
+      const res = await apiClient.post('/login', credentials);
       const { token, user } = res.data;
       localStorage.setItem('auth_token', token);
       commit('SET_AUTH_TOKEN', token);
@@ -156,13 +152,22 @@ const actions = {
 
   async logout({ commit }) {
     try {
-      await authService.logout();
       localStorage.removeItem('auth_token');
       commit('SET_AUTH_TOKEN', '');
       commit('SET_AUTH_USER', null);
     } catch (error) {
       commit('SET_ERROR', 'Failed to logout.');
       console.error(error);
+      throw error;
+    }
+  },
+
+  async deleteUser({ commit }, id) {
+    try {
+      await apiClient.delete(`/users/${id}`);
+    } catch (error) {
+      commit('SET_SERVER_ERROR', 'Failed to delete user from server.');
+      console.log(error);
       throw error;
     }
   },

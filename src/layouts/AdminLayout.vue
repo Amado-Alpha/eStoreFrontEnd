@@ -15,7 +15,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import Sidebar from '../views/admin/AdminPanel.vue';
+import Sidebar from '../views/admin/components/AdminPanel.vue';
 // import Header from '../views/admin/Home.vue';
 
 

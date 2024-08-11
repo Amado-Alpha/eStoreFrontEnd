@@ -1,5 +1,6 @@
 <template>
-  <footer class="font-roboto bg-green-600 text-gray-300 py-12">
+  <footer class="font-roboto bg-green-100 text-black py-12">
+
     <div class="container mx-auto px-4 lg:px-8">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
         <!-- About Section -->
@@ -15,11 +16,11 @@
           <h2 class="text-xl font-semibold mb-4">Contact Us</h2>
           <div class="flex items-center mb-2">
             <i class="fas fa-envelope text-lg mr-3"></i>
-            <a href="mailto:contact@company.com" class="hover:text-white">contact@company.com</a>
+            <a href="mailto:contact@company.com" class="hover:text-green-800">contact@company.com</a>
           </div>
           <div class="flex items-center mb-2">
             <i class="fas fa-phone-alt text-lg mr-3"></i>
-            <a href="tel:+1234567890" class="hover:text-white">+1234567890</a>
+            <a href="tel:+1234567890" class="hover:text-green-800">+1234567890</a>
           </div>
           <div class="flex items-center">
             <i class="fas fa-map-marker-alt text-lg mr-3"></i>
@@ -31,10 +32,10 @@
         <div>
           <h2 class="text-xl font-semibold mb-4">Quick Links</h2>
           <ul class="space-y-2">
-            <li><router-link :to="{ name: 'About' }" class="hover:text-white">About Us</router-link></li>
-            <li><router-link :to="{ name: 'Services' }" class="hover:text-white">Services</router-link></li>
-            <li><router-link :to="{ name: 'Products' }" class="hover:text-white">Products</router-link></li>
-            <li><router-link :to="{ name: 'Contact' }" class="hover:text-white">Contact Us</router-link></li>
+            <li><router-link :to="{ name: 'About' }" class="hover:text-black">About Us</router-link></li>
+            <li><router-link :to="{ name: 'Services' }" class="hover:text-black">Services</router-link></li>
+            <li><router-link :to="{ name: 'Products' }" class="hover:text-black">Products</router-link></li>
+            <li><router-link :to="{ name: 'Contact' }" class="hover:text-black">Contact Us</router-link></li>
           </ul>
         </div>
 
@@ -42,10 +43,10 @@
         <div>
           <h2 class="text-xl font-semibold mb-4">Follow Us</h2>
           <div class="flex space-x-4">
-            <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f text-2xl"></i></a>
-            <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter text-2xl"></i></a>
-            <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in text-2xl"></i></a>
-            <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram text-2xl"></i></a>
+            <a href="#" class="text-gray-500 hover:text-gold"><i class="fab fa-facebook-f text-2xl"></i></a>
+            <a href="#" class="text-gray-500 hover:text-gold"><i class="fab fa-twitter text-2xl"></i></a>
+            <a href="#" class="text-gray-500 hover:text-gold"><i class="fab fa-linkedin-in text-2xl"></i></a>
+            <a href="#" class="text-gray-500 hover:text-gold"><i class="fab fa-instagram text-2xl"></i></a>
           </div>
         </div>
       </div>
@@ -60,25 +61,3 @@
 <script setup>
 // No script setup needed for this static footer component
 </script>
-
-<style scoped>
-footer {
-  font-family: 'Roboto', sans-serif;
-}
-
-a:hover {
-  color: #fff;
-}
-
-footer h2 {
-  transition: color 0.3s;
-}
-
-footer a {
-  transition: color 0.3s;
-}
-
-footer i {
-  transition: color 0.3s;
-}
-</style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="font-roboto bg-green-100 mb-6">
+    <div class="font-roboto mb-6">
         <div class="container mx-auto py-16 lg:px-12 px-4 rounded-lg">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-semibold text-gray-700 dark:text-white sm:text-5xl">
@@ -14,7 +14,7 @@
                 :navigation="false" :autoplay="{ delay: 5000, disableOnInteraction: false }" :breakpoints="breakpoints"
                 :modules="modules" class="mySwiper">
                 <swiper-slide v-for="(testimonial, index) in testimonials" :key="index"
-                    class="testimonial-slide p-8 bg-gray-100 rounded-lg">
+                    class="testimonial-slide p-8 rounded-lg">
                     <div class="testimonial-text-container h-32 mb-4 overflow-hidden text-ellipsis whitespace-normal">
                         <p class="text italic text-gray-600">"{{ testimonial.quote }}"</p>
                     </div>

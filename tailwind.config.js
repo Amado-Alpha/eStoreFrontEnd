@@ -32,6 +32,8 @@ export default {
         "pale-blue": "#F5F6FF",
         "white-400": "rgba(255, 255, 255, 0.80)",
         "whatsapp": '#25D366',
+        "gold": '#FFD700', 
+       
       },
       boxShadow: {
         '3xl': '0 10px 40px rgba(0, 0, 0, 0.1)'

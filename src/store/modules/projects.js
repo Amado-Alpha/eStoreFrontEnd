@@ -51,8 +51,14 @@ const mutations = {
       state.projects.splice(index, 1, updatedProject);
     }
   },
-  [DELETE_PROJECT]: (state, projectId) =>
-    state.projects.filter((project) => project.id !== projectId),
+  // [DELETE_PROJECT]: (state, projectId) =>
+  //   state.projects.filter((project) => project.id !== projectId),
+
+  [DELETE_PROJECT]: (state, projectId) => {
+    state.projects = state.projects.filter(
+      (project) => project.id !== projectId
+    );
+  },
 };
 
 const actions = {
@@ -133,13 +139,11 @@ const actions = {
     console.log('PROJECT B4 TRY:', project);
     try {
       const res = await axiosClient.put(`/projects/${id}`, project);
-      console.log('RESPONSE:', res);
       commit('SET_PROJECT', project);
       const {
         data: { data },
       } = res;
 
-      console.log('UPDATED PROJECT:', data);
       return data;
     } catch (error) {
       commit('SET_UPLOAD_ERROR', 'Failed to add project details to server.');
@@ -160,11 +164,11 @@ const actions = {
         data: { data },
       } = response;
 
-      // console.log('PROJECTS:', data);
+      console.log('FEATURES:', data[0].features[0].description.slice(0, 30));
 
-      commit(SET_PROJECTS, data);
+      commit('SET_PROJECTS', data);
     } catch (error) {
-      commit(SET_ERROR, error);
+      commit('SET_SERVER_ERROR', error);
     } finally {
       commit(SET_LOADING, false);
     }
@@ -174,7 +178,7 @@ const actions = {
     try {
       console.log('Project to delete:', id);
       await axiosClient.delete(`/projects/${id}`);
-      commit(DELETE_PROJECT, id);
+      commit('DELETE_PROJECT', id);
     } catch (error) {
       commit('SET_SERVER_ERROR', 'Failed to delete project from server.');
       console.log(error);

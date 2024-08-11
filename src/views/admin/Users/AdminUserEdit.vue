@@ -29,13 +29,15 @@
                 </div>
                 <button type="submit" :disabled="isButtonDisabled"
                     class="w-full py-2 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                    :class="{ 'bg-indigo-600 hover:bg-indigo-700': !isButtonDisabled, 'bg-gray-400 cursor-not-allowed': isButtonDisabled }">
-                    Update
+                    :class="{ 'bg-green-600 hover:bg-green-700': !isButtonDisabled, 'bg-gray-400 cursor-not-allowed': isButtonDisabled }">
+                    Submit
                 </button>
             </form>
         </div>
     </div>
+    <AdminFooter />
 </template>
+
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
@@ -43,15 +45,22 @@ import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import { useToast } from 'vue-toastification';
 
+import AdminFooter from '../components/AdminFooter.vue';
+
+// Third party variables
 const router = useRouter();
 const store = useStore();
 const toast = useToast();
 
+// Form variables
 const name = ref('');
 const email = ref('');
 const password = ref('');
 const password_confirmation = ref('');
 
+/**
+ * COMPUTED PROPERTIES
+ */
 // Computed properties for password validation
 const passwordMismatch = computed(() => {
     return password.value && password_confirmation.value && password.value !== password_confirmation.value;
@@ -79,12 +88,14 @@ const props = defineProps({
 
 const userId = props.id;
 
+// Store dispatches
 const getUser = async () => {
     const user = await store.dispatch('users/getUser', userId);
     name.value = user.name;
     email.value = user.email;
 }
 
+// Uptating logic
 const updateUser = async () => {
     try {
         const user = {

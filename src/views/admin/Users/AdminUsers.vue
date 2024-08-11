@@ -1,11 +1,11 @@
 <template>
     <!-- Projects table -->
     <div class="container mx-auto p-4 font-roboto">
-        <h2 ref="tableTopPosition" class="text-3xl font-bold mb-6 text-center">Users</h2>
+        <h2 ref="tableTopPosition" class="text-2xl font-bold mb-8 text-center text-gray-700">ADMINS</h2>
         <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
             <table class="min-w-full leading-normal">
                 <thead>
-                    <tr class="bg-gray-800 text-white">
+                    <tr class="bg-green-600 text-white uppercase">
                         <th class="py-3 px-4 text-left">Name</th>
                         <th class="py-3 px-4 text-left">Email</th>
                         <th class="py-3 px-4 text-left">Actions</th>
@@ -59,19 +59,22 @@
             </div>
         </div>
     </div>
-
-    <!-- Projects form -->
     <AdminRegister />
+    <AdminFooter />
 </template>
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import { useStore } from 'vuex';
-import DeleteConfirmationModal from './DeleteConfirmationModal.vue';
+import { useToast } from 'vue-toastification';
+
+import DeleteConfirmationModal from '../components/DeleteConfirmationModal.vue';
 import AdminRegister from './AdminRegister.vue';
+import AdminFooter from '../components/AdminFooter.vue';
 
-
+const toast = useToast();
 const store = useStore();
+
 const userName = ref('');
 const email = ref('');
 const showDeleteModal = ref(false);
@@ -143,30 +146,15 @@ const confirmDelete = async () => {
     try {
         await store.dispatch('users/deleteUser', userIdToDelete.value);
         showDeleteModal.value = false;
+        toast.success('User deleted successfully.');
+        fetchUsers();
     } catch (error) {
+        showDeleteModal.value = false;
+        toast.error('Failed to delete user');
         console.error('Failed to delete user:', error);
     }
 };
 
-
-/**
- * USER FORM LOGIC
- */
-
-const saveUser = async () => {
-
-    try {
-        const user = {
-            name: userName.value,
-            email: email.value,
-        }
-
-        // Adding user to the state
-        await store.dispatch('users/addUser', user);
-    } catch (error) {
-        console.error(error);
-    }
-};
 
 // Fetch data on component mount
 onMounted(() => {
