@@ -95,8 +95,7 @@
                     <p class="font-roboto text-gray-600 text-base mb-8">Are you a final-year student looking to develop
                         an
                         outstanding
-                        project, and you're frustrated not knowing where to start? We've helped many others(link to
-                        testimonials) like you!</p>
+                        project, and you're frustrated not knowing where to start? We've helped many like you!</p>
 
                     <div class="mt-12">
                         <router-link :to="{ name: 'Contact' }"
