@@ -100,7 +100,7 @@
 
                     <div class="mt-12">
                         <router-link :to="{ name: 'Contact' }"
-                            class="font-roboto animate-bounce focus:animate-none hover:animate-none inline-flex text-md font-medium bg-green-500 mt-3 px-4 py-2 rounded-lg tracking-wide text-white">
+                            class="font-roboto animate-none focus:animate-none hover:animate-none inline-flex text-md font-medium bg-green-500 mt-3 px-4 py-2 rounded-lg tracking-wide text-white">
                             Contact Us Today!
                         </router-link>
                     </div>
@@ -234,5 +234,23 @@ const projects = [
 
 .project-slide li {
     margin-bottom: 0.5rem;
+}
+
+.pulse {
+    animation: pulse 3.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 </style>
