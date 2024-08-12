@@ -1,6 +1,6 @@
 <template>
   <section>
-    <HomePageHeroSection />
+    <HeroSection />
   </section>
   <section>
     <HomePageServiceSection />
@@ -32,5 +32,6 @@ import HomePageProjectSection from '../sections/HomePageProjectSection.vue';
 import HomePageWhyUsSection from '../sections/HomePageWhyUsSection.vue';
 import HomePageProductSection from '../sections/HomePageProductSection.vue';
 import BackToTopButton from './BackToTopButton.vue';
+import HeroSection from './HeroSection.vue';
 
 </script>

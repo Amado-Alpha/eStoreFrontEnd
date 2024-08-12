@@ -190,12 +190,11 @@ export const data = {
   ],
 
   navLinks: [
-    { href: { path: '/' }, label: 'HOME' },
-    { href: { path: '/about' }, label: 'ABOUT US' },
-    { href: { path: '/services' }, label: 'SERVICES' },
-    { href: { path: '/contacts' }, label: 'CONTACTS' },
-    { href: { path: '/products' }, label: 'PRODUCTS' },
-    { href: { path: '/hero' }, label: 'HERO' },
+    { href: { path: '/' }, label: 'Home' },
+    { href: { path: '/about' }, label: 'About Us' },
+    { href: { path: '/services' }, label: 'Services' },
+    { href: { path: '/contacts' }, label: 'Contacts' },
+    { href: { path: '/products' }, label: 'Products' },
     // { href: { path: "/ContactUs", hash: "#contact-us" }, label: "Contact Us" },
   ],
 
