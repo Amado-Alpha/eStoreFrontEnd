@@ -1,15 +1,15 @@
 <template>
-    <div class="relative grid lg:grid-cols-2 grid-rows-1 bg-gray-100 overflow-hidden mt-16 lg:mt-24">
+    <div class="relative grid lg:grid-cols-2 grid-rows-1 overflow-hidden mt-16 lg:mt-24">
         <!-- Background Overlay with Gradient -->
         <div class="absolute inset-0 bg-gradient-to-b from-green-500 via-green-400 to-green-100 opacity-75 z-10"></div>
 
         <!-- Left Side: Swiper with Pagination, Autoplay, and Loop -->
         <div class="relative z-20 overflow-hidden row-span-1 col-span-1 mb-10">
-            <swiper :pagination="true" :autoplay="{ delay: 1000, disableOnInteraction: false }" :loop="true"
-                :speed="4000" :modules="modules" class="rounded-lg shadow-lg">
+            <swiper :pagination="{ clickable: true }" :autoplay="{ delay: 1000, disableOnInteraction: false }"
+                :loop="true" :speed="4000" :modules="modules" class="rounded-lg shadow-lg">
                 <swiper-slide v-for="(image, index) in slideImages" :key="index">
                     <img :src="image"
-                        class="object-cover w-full h-80 sm:h-96 md:h-[550px] lg:h-full rounded-lg opacity-60 bg-green-900 hover:opacity-90 transition-opacity duration-300 ease-in-out"
+                        class="object-cover w-full h-80 sm:h-96 md:h-[550px] lg:h-[500px] rounded-lg  transition-opacity duration-300 ease-in-out"
                         :alt="'Slide ' + (index + 1)" />
                 </swiper-slide>
             </swiper>
@@ -18,7 +18,7 @@
         <!-- Right Side: Content -->
         <div
             class="container mx-auto relative z-20 flex flex-col justify-center row-span-1 col-span-1 text-white p-8 lg:p-16 w-full h-full md:h-96 ">
-            <div class="lg:mx-0 flex flex-col items-center lg:items-start space-y-6 lg:space-y-8">
+            <div class="lg:mx-0 flex flex-col items-center lg:items-start space-y-6 lg:space-y-8 lg:mt-32">
                 <h1
                     class="text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight mb-4 lg:mb-6 text-center lg:text-left drop-shadow-lg">
                     Discover the Future of Electronics
@@ -47,10 +47,10 @@ import { Pagination, Autoplay } from 'swiper/modules';
 const modules = [Pagination, Autoplay];
 
 const slideImages = [
-    'https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/engineers-working-in-a-factory-workshop-gorodenkoff-productionsscience-photo-library.jpg',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhOFYZNzb3V1Il4ZWGcMnoDf8hH9zb0moh7Q&s',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0DmBvbN-mDBWnlbhLnmvqd-WnsET60pJmCA&s',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTd25Sp6tV4jpAOtqFN7ZPYHP5OtDZvXSig0g&s'
+    'https://www.ucl.ac.uk/electronic-electrical-engineering/sites/electronic_electrical_engineering/files/styles/large_image/public/img_6217-cropped_800_x_500_0.jpg?itok=bzP7Mut-',
+    'https://techatronic.com/wp-content/uploads/2022/03/fre-1-1-800x531.jpg',
+    'https://www.ucl.ac.uk/electronic-electrical-engineering/sites/electronic_electrical_engineering/files/styles/large_image/public/img_6217-cropped_800_x_500_0.jpg?itok=bzP7Mut-',
+    'https://techatronic.com/wp-content/uploads/2022/03/fre-1-1-800x531.jpg',
 ];
 </script>
 

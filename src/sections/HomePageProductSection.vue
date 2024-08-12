@@ -8,7 +8,7 @@
                 Discover our range of top-quality products available at an affordable price.
             </p>
         </div>
-        <swiper :slidesPerView="1" :spaceBetween="20" :loop="true" :pagination="{ clickable: true }" :navigation="false"
+        <swiper :slidesPerView="1" :spaceBetween="20" :loop="true" :navigation="false"
             :autoplay="{ delay: 3000, disableOnInteraction: false }" :breakpoints="breakpoints" :modules="modules"
             class="mySwiper">
             <swiper-slide v-for="(product, index) in products" :key="index"
