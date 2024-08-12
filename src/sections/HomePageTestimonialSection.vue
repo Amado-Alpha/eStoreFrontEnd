@@ -58,20 +58,19 @@ export default {
                 image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLhr_8m5RHlR4Vbh6ZF6Tawt5gQWNE2ePSjQ&s"
             },
             {
-                quote: "This is a longer testimonial to test the height of the slides. The content should not make the slides uneven.",
+                quote: "I trusted MeckTonix with my project and i never regret doing that, my project grade attests to this.",
                 name: "Alice Brown",
                 position: "Developer, Tech Solutions",
                 image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyUGStslkW8XpFkAVnQD0QcSz4MEZXZmjEwg&s"
             },
             {
-                quote: "Fantastic experience. Will use again.",
+                quote: "The devices i bought were highly reliable, didn't have to do any maintenace for a year or so.",
                 name: "Jane Smith",
                 position: "Marketing Manager, Business Co.",
                 image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLhr_8m5RHlR4Vbh6ZF6Tawt5gQWNE2ePSjQ&s"
             },
             {
-                quote: "This is a longer testimonial to test the height of the slides. The content should not make the slides uneven.",
-                name: "Alice Brown",
+                quote: "I am happy i found Mecktonix, almost all of electronics problems are resolved.",
                 position: "Developer, Tech Solutions",
                 image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyUGStslkW8XpFkAVnQD0QcSz4MEZXZmjEwg&s"
             },
