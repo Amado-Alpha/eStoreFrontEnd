@@ -4,12 +4,12 @@
         <div class="absolute inset-0 bg-gradient-to-b from-green-500 via-green-400 to-green-100 opacity-75 z-10"></div>
 
         <!-- Left Side: Swiper with Pagination, Autoplay, and Loop -->
-        <div class="relative z-20 overflow-hidden row-span-1 col-span-1 w-full h-80 md:h-96 lg:h-full">
+        <div class="relative z-20 overflow-hidden row-span-1 col-span-1 w-full h-80 md:h-[550px] lg:h-full">
             <swiper :pagination="true" :autoplay="{ delay: 1000, disableOnInteraction: false }" :loop="true"
                 :speed="4000" :modules="modules" class="mySwiper w-full h-full rounded-lg shadow-lg">
                 <swiper-slide v-for="(image, index) in slideImages" :key="index">
                     <img :src="image"
-                        class="object-cover w-full h-80 md:h-96 rounded-lg opacity-60 bg-green-900 hover:opacity-90 transition-opacity duration-300 ease-in-out"
+                        class="object-cover w-full h-80 md:h-[500px] rounded-lg opacity-60 bg-green-900 hover:opacity-90 transition-opacity duration-300 ease-in-out"
                         :alt="'Slide ' + (index + 1)" />
                 </swiper-slide>
             </swiper>
