@@ -51,12 +51,19 @@
                                     class="fas fa-star text-yellow-400 text-base md:text-lg"></i>
                                 <i v-else class="fas fa-star text-gray-300 text-base md:text-lg"></i>
                             </template>
-                            <p>button</p>
-                            <!-- Button to Scroll Down -->
-                            <button @click="scrollToNextSection"
-                                class="absolute bottom-2 left-1/2 transform -translate-x-1/2 bg-gray-100 p-2 rounded-full shadow-lg hover:bg-gray-200 transition-all duration-300 animate-bounce">
-                                <i class="fas fa-hand-point-down text-green-500 text-2xl"></i>
-                            </button>
+                            <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-4">
+                                <!-- Button to Scroll Down -->
+                                <button @click="scrollToNextSection"
+                                    class="bg-gray-100 p-2 rounded-full shadow-lg hover:bg-gray-200 transition-all duration-300 animate-bounce">
+                                    <i class="fas fa-hand-point-down text-gold text-2xl"></i>
+                                </button>
+                                <!-- Button to Scroll Up -->
+                                <button @click="scrollToPreviousSection"
+                                    class="bg-gray-100 p-2 shadow-lg hover:bg-gray-200 transition-all duration-300 animate-bounce rounded-full">
+                                    <i class="fas fa-hand-point-up text-green-500 text-2xl"></i>
+                                </button>
+                            </div>
+
                         </div>
                         <!-- <blockquote
                             class="border-l-4 border-green-500 pl-2 md:pl-4 italic text-gray-600 text-xs md:text-sm">
