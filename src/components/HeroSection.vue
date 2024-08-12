@@ -23,7 +23,7 @@
                     class="text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight mb-4 lg:mb-6 text-center lg:text-left drop-shadow-lg">
                     Discover the Future of Electronics
                 </h1>
-                <p class="text-base md:text-lg lg:text-xl mb-6 lg:mb-8 text-center lg:text-left drop-shadow-md">
+                <p class="text-xl md:text-2xl lg:text-2xl mb-6 lg:mb-8 text-center lg:text-left drop-shadow-md">
                     Explore cutting-edge technology and innovative gadgets designed to enhance your everyday life. <span
                         class="text-gray-700">From the latest in smart home devices to advanced tech solutions, find
                         everything you need right here.</span>

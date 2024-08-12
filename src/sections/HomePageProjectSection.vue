@@ -32,9 +32,11 @@
                     <img :src="project.image" alt="Project Image"
                         class="w-full h-48 md:h-64 object-cover rounded-lg hover:shadow-2xl transition-shadow duration-300" />
                     <div class="flex flex-col justify-center space-y-2 md:space-y-4">
-                        <h3 class="font-roboto text-lg md:text-2xl font-bold mb-1 md:mb-2 text-gray-800">{{
-                            project.title }}</h3>
-                        <p class="font-roboto text-sm md:text-base text-gray-700 mb-2 md:mb-4">{{ project.description }}
+                        <h3 class="font-roboto text-xl md:text-2xl lg:text-3xl font-bold mb-1 md:mb-2 text-gray-600">
+                            {{
+                                project.title }}</h3>
+                        <p class="font-roboto text-md md:text-base lg:text-lg text-gray-600 mb-2 md:mb-4">{{
+                            project.description }}
                         </p>
                         <div class="mt-4 text-gray-700">
                             <strong class="text-base md:text-lg">Key Features:</strong>
@@ -92,15 +94,17 @@
                         your
                         idea
                         into reality!</h2>
-                    <p class="font-roboto text-gray-600 text-base mb-8">Are you a final-year student looking to develop
+                    <p class="font-roboto text-gray-600 text-xl lg:text-2xl mb-8">Are you a final-year student looking
+                        to
+                        develop
                         an
                         outstanding
                         project, and you're frustrated not knowing where to start? We've helped many like you!</p>
 
                     <div class="mt-12">
                         <router-link :to="{ name: 'Contact' }"
-                            class="font-roboto animate-none focus:animate-none hover:animate-none inline-flex text-md font-medium bg-green-500 mt-3 px-4 py-2 rounded-lg tracking-wide text-white">
-                            Contact Us Today!
+                            class="text-lg font-roboto animate-none focus:animate-none hover:animate-none inline-flex text-md font-medium bg-green-500 mt-3 px-4 py-2 rounded-lg tracking-wide text-white">
+                            Contact Us Today
                         </router-link>
                     </div>
                 </div>
