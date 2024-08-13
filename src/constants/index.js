@@ -1,6 +1,103 @@
 import { facebook, instagram, twitter } from '../assets/icons';
 
 export const data = {
+  projects: [
+    {
+      title: 'Automated Car',
+      description:
+        'An innovative project showcasing an automated car capable of navigating through predefined routes with minimal human intervention. This project leverages advanced technologies to enhance driving efficiency and safety.',
+      rating: 5,
+      features: [
+        'Innovative and cutting-edge technology',
+        'Efficient and user-friendly design',
+        'Seamless integration with existing systems',
+      ],
+      image:
+        'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi_tpcOWxyxnK5xABlSFZSLYQBqYs0amBx9GADOcnR6KqZbGd81NfOtd_K3Djdf4rtptrSJEp0cYnzW00KHEJ6z506aQNKBN3I6jiEKGOBMUpZFS6FZOt7Gy6LudX4caYyMwYaZyEFrZG4/s1600/20471483357907.jpg',
+    },
+    {
+      title: 'Water Dispenser',
+      description:
+        'A smart water dispenser that provides instant access to clean drinking water. This project integrates IoT and cloud technologies to ensure reliable and efficient water dispensing.',
+      rating: 4,
+      features: [
+        'Instant access to clean drinking water',
+        'Integration with IoT and cloud technologies',
+        'Reliable and efficient water dispensing',
+      ],
+      image:
+        'https://circuitdigest.com/sites/default/files/inlineimages/u/Automatic-Water-Dispenser-using-Arduino-in-action.jpg',
+    },
+    {
+      title: 'Smart Waste Bin',
+      description:
+        'A modern waste management solution featuring a smart bin that automatically sorts waste. This project aims to promote environmental sustainability through intelligent waste disposal.',
+      rating: 4,
+      features: [
+        'Automated waste sorting',
+        'Promotes environmental sustainability',
+        'Intelligent waste disposal',
+      ],
+      image:
+        'https://hackster.imgix.net/uploads/attachments/1600475/_GcIvnFXZzP.blob?auto=compress&w=1600&h=1200&fit=min&fm=jpg',
+    },
+  ],
+
+  testimonials: [
+    {
+      quote: 'This service is amazing. Highly recommend!',
+      name: 'John Doe',
+      position: 'CEO, Company Inc.',
+      image:
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvk8JXZ54_NSS6v6ByvSbeA6W_tYQkRglv_w&s',
+    },
+    {
+      quote: 'Fantastic experience. Will use again.',
+      name: 'Jane Smith',
+      position: 'Marketing Manager, Business Co.',
+      image:
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLhr_8m5RHlR4Vbh6ZF6Tawt5gQWNE2ePSjQ&s',
+    },
+    {
+      quote:
+        'I trusted MeckTonix with my project and i never regret doing that, my project grade attests to this.',
+      name: 'Alice Brown',
+      position: 'Developer, Tech Solutions',
+      image:
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyUGStslkW8XpFkAVnQD0QcSz4MEZXZmjEwg&s',
+    },
+    {
+      quote:
+        "The devices i bought were highly reliable, didn't have to do any maintenace for a year or so.",
+      name: 'Jane Smith',
+      position: 'Marketing Manager, Business Co.',
+      image:
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLhr_8m5RHlR4Vbh6ZF6Tawt5gQWNE2ePSjQ&s',
+    },
+    {
+      quote:
+        'I am happy i found Mecktonix, almost all of electronics problems are resolved.',
+      position: 'Developer, Tech Solutions',
+      image:
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyUGStslkW8XpFkAVnQD0QcSz4MEZXZmjEwg&s',
+    },
+    {
+      quote: 'Fantastic experience. Will use again.',
+      name: 'Genana Elly',
+      position: 'Marketing Manager, Business Co.',
+      image:
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyUGStslkW8XpFkAVnQD0QcSz4MEZXZmjEwg&s',
+    },
+    {
+      quote:
+        'This is a longer testimonial to test the height of the slides. The content should not make the slides uneven.',
+      name: 'Mireya Elly',
+      position: 'Developer, Tech Solutions',
+      image:
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLhr_8m5RHlR4Vbh6ZF6Tawt5gQWNE2ePSjQ&s',
+    },
+  ],
+
   products: [
     {
       id: 1,

@@ -30,8 +30,8 @@
                                 class="bg-red-600 text-white py-1 px-2 rounded-md shadow-md hover:bg-red-700">
                                 <i class="fa-solid fas fa-trash"></i>
                             </button>
-                            <DeleteConfirmationModal :isOpen="showDeleteModal" @close="showDeleteModal = false"
-                                @confirm="confirmDelete" />
+                            <DeleteConfirmationModal :isOpen="showDeleteModal" :warningMessage="warningMessage"
+                                @close="showDeleteModal = false" @confirm="confirmDelete" />
                         </td>
                     </tr>
                 </tbody>
@@ -137,8 +137,11 @@ const scrollToPosition = () => {
 /**
  * DELETE USER
  */
+const warningMessage = ref('');
+
 const openDeleteModal = (userId) => {
     userIdToDelete.value = userId;
+    warningMessage.value = "Are you sure you want to delete this user ?";
     showDeleteModal.value = true;
 };
 

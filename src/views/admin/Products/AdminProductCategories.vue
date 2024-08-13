@@ -2,7 +2,8 @@
     <div class="px-8">
         <!-- Products table -->
         <div class="container mx-auto p-4 font-roboto">
-            <h2 ref="tableTopPosition" class="text-2xl font-bold mb-8 text-center text-gray-700">PRODUCTS</h2>
+            <h2 ref="tableTopPosition" class="text-2xl font-bold mb-8 text-center text-gray-700">PRODUCTS' CATEGORIES
+            </h2>
             <div class="overflow-x-auto">
                 <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden text-left rtl:text-right">
                     <thead class="bg-green-600 text-gray-200 uppercase">
@@ -20,7 +21,6 @@
                         <tr v-for="category in paginatedProducts" :key="category.id"
                             class="hover:bg-gray-100 odd:bg-gray-100 even:bg-green-100">
                             <td class="py-3 px-4 border-b">{{ category.name }}</td>
-                            <td class="py-3 px-4 border-b">{{ category.category.name }}</td>
                             <td class="py-3 px-4 border-b">
                                 <router-link :to="{ name: 'admin.edit-category', params: { id: category.id } }"
                                     class="bg-blue-600 text-white py-1 px-2 rounded-md mr-2 shadow-md hover:bg-blue-700">
@@ -30,8 +30,8 @@
                                     class="bg-red-600 text-white py-1 px-2 rounded-md shadow-md hover:bg-red-700">
                                     <i class="fa-solid fas fa-trash"></i>
                                 </button>
-                                <DeleteConfirmationModal :isOpen="showDeleteModal" @close="showDeleteModal = false"
-                                    @confirm="confirmDelete" />
+                                <DeleteConfirmationModal :isOpen="showDeleteModal" :warningMessage="warningMessage"
+                                    @close="showDeleteModal = false" @confirm="confirmDelete" />
                             </td>
                         </tr>
                     </tbody>
@@ -68,7 +68,8 @@
         <div class="container mx-auto font-roboto">
             <div class="md:w-1/2 mx-auto">
                 <form @submit.prevent="saveCategory" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-
+                    <h2 class="text-2xl font-bold text-gray-700 mb-6 text-center"> Add new products' category
+                    </h2>
                     <div class="mb-4">
                         <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Category Name</label>
                         <input v-model="categoryName" type="text" placeholder="Enter category name" required id="name"
@@ -98,12 +99,12 @@ import DeleteConfirmationModal from '../components/DeleteConfirmationModal.vue';
 
 import AdminFooter from '../components/AdminFooter.vue';
 
+
 // Third party variables 
 const store = useStore();
 const toast = useToast();
 
 // Form variables
-const image = ref(null);
 const categoryName = ref('');
 
 // Computed properties
@@ -163,19 +164,31 @@ const scrollToPosition = function () {
  */
 const categoryIdToDelete = ref(null);
 const showDeleteModal = ref(false);
+const warningMessage = ref('');
 
-const openDeleteModal = (projectId) => {
-    categoryIdToDelete.value = projectId;
+const openDeleteModal = (categoryId) => {
+    categoryIdToDelete.value = categoryId;
     showDeleteModal.value = true;
+    warningMessage.value = "Deleting this category will also delete all the products under this category, Do you still want to delete this category?"
 };
 
 const confirmDelete = async () => {
     try {
-        await store.dispatch('categories/deleteCategory', categoryIdToDelete.value);
+        console.log('ID', categoryIdToDelete.value)
+        const res = await store.dispatch('categories/deleteCategory', categoryIdToDelete.value);
+        if (res.status === 204) {
+            toast.success('Category deleted successfully!');
+            fetchCategories();
+        } else {
+            toast.error('Failed to delete category');
+        }
+
         showDeleteModal.value = false;
-        toast.success('Category deleted successfully!');
+
+        fetchCategories();
     } catch (error) {
         console.error('Failed to delete category:', error);
+        showDeleteModal.value = false;
         toast.error('Failed to delete category');
     }
 };
@@ -196,7 +209,7 @@ const saveCategory = async () => {
 
         await store.dispatch('categories/addCategory', category);
         toast.success('Category created successfully!');
-
+        fetchCategories();
     } catch (error) {
         console.error(error);
         toast.error('failed to create to category!');

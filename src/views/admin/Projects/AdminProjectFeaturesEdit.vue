@@ -3,7 +3,7 @@
     <div class="container mx-auto font-roboto">
         <div class="md:w-1/2 mx-auto">
             <form @submit.prevent="updateFeature" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-
+                <h2 class="text-2xl font-bold mb-8 text-center text-gray-700">Edit projects' feature details</h2>
                 <div class="mb-4">
                     <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Feature</label>
                     <input v-model="featureDescription" type="text" placeholder="Enter brief feature description name"

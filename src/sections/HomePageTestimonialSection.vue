@@ -1,6 +1,6 @@
 <template>
     <div class="font-roboto mb-6">
-        <div class="container mx-auto py-16 lg:px-12 px-4 rounded-lg">
+        <div class="testimonials-section container mx-auto py-16 lg:px-12 px-4 rounded-lg">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-semibold text-gray-700 dark:text-white sm:text-5xl">
                     TESTIMONIALS
@@ -30,93 +30,59 @@
     </div>
 </template>
 
-<script>
-import { ref } from 'vue';
+<script setup>
+import { ref, onMounted } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Pagination, Navigation, Autoplay } from 'swiper/modules';
+import { data } from '../constants';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-export default {
-    components: {
-        Swiper,
-        SwiperSlide,
+gsap.registerPlugin(ScrollTrigger);
+
+
+const testimonials = ref(data.testimonials);
+
+const modules = [Pagination, Navigation, Autoplay];
+
+const breakpoints = {
+    640: {
+        slidesPerView: 1,
+        spaceBetween: 20,
     },
-    setup() {
-        const testimonials = ref([
-            {
-                quote: "This service is amazing. Highly recommend!",
-                name: "John Doe",
-                position: "CEO, Company Inc.",
-                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvk8JXZ54_NSS6v6ByvSbeA6W_tYQkRglv_w&s"
-            },
-            {
-                quote: "Fantastic experience. Will use again.",
-                name: "Jane Smith",
-                position: "Marketing Manager, Business Co.",
-                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLhr_8m5RHlR4Vbh6ZF6Tawt5gQWNE2ePSjQ&s"
-            },
-            {
-                quote: "I trusted MeckTonix with my project and i never regret doing that, my project grade attests to this.",
-                name: "Alice Brown",
-                position: "Developer, Tech Solutions",
-                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyUGStslkW8XpFkAVnQD0QcSz4MEZXZmjEwg&s"
-            },
-            {
-                quote: "The devices i bought were highly reliable, didn't have to do any maintenace for a year or so.",
-                name: "Jane Smith",
-                position: "Marketing Manager, Business Co.",
-                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLhr_8m5RHlR4Vbh6ZF6Tawt5gQWNE2ePSjQ&s"
-            },
-            {
-                quote: "I am happy i found Mecktonix, almost all of electronics problems are resolved.",
-                position: "Developer, Tech Solutions",
-                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyUGStslkW8XpFkAVnQD0QcSz4MEZXZmjEwg&s"
-            },
-            {
-                quote: "Fantastic experience. Will use again.",
-                name: "Genana Elly",
-                position: "Marketing Manager, Business Co.",
-                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyUGStslkW8XpFkAVnQD0QcSz4MEZXZmjEwg&s"
-            },
-            {
-                quote: "This is a longer testimonial to test the height of the slides. The content should not make the slides uneven.",
-                name: "Mireya Elly",
-                position: "Developer, Tech Solutions",
-                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLhr_8m5RHlR4Vbh6ZF6Tawt5gQWNE2ePSjQ&s"
-            },
-            // Add more testimonials as needed
-        ]);
-
-        const modules = [Pagination, Navigation, Autoplay];
-
-        const breakpoints = {
-            640: {
-                slidesPerView: 1,
-                spaceBetween: 20,
-            },
-            768: {
-                slidesPerView: 2,
-                spaceBetween: 30,
-            },
-            1024: {
-                slidesPerView: 2,
-                spaceBetween: 40,
-            },
-            1280: {
-                slidesPerView: 3,
-                spaceBetween: 50,
-            },
-        };
-
-        return {
-            testimonials,
-            modules,
-            breakpoints,
-        };
+    768: {
+        slidesPerView: 2,
+        spaceBetween: 30,
+    },
+    1024: {
+        slidesPerView: 2,
+        spaceBetween: 40,
+    },
+    1280: {
+        slidesPerView: 3,
+        spaceBetween: 50,
     },
 };
+
+onMounted(() => {
+    gsap.from(".testimonials-section", {
+        scale: 0.7,
+        opacity: 0,
+        duration: 1.2,
+        ease: "back.out(1.7)",
+        scrollTrigger: {
+            trigger: ".testimonials-section",
+            start: "top 80%",
+            end: "bottom 40%",
+            scrub: 1,
+            once: true,
+        },
+    });
+});
+
 </script>
 
 <style scoped>

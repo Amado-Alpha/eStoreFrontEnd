@@ -1,9 +1,10 @@
 <template>
-    <!-- Product form -->
+    <!-- Category form -->
     <div class="container mx-auto font-roboto">
         <div class="md:w-1/2 mx-auto">
             <form @submit.prevent="updateCategory" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-
+                <h2 class="text-2xl font-bold text-gray-700 mb-6 text-center"> Edit products' category details
+                </h2>
                 <div class="mb-4">
                     <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Category Name</label>
                     <input v-model="categoryName" type="text" placeholder="Enter category name" required id="name"
@@ -52,6 +53,7 @@ const categoryId = props.id;
 const fetchCategory = async () => {
     const category = await store.dispatch('categories/getCategory', categoryId);
     // Pre-populating the form fields with data.
+    console.log('CATEGORY:', category.name);
     categoryName.value = category.name;
 
 };
@@ -67,13 +69,12 @@ const updateCategory = async () => {
         };
 
         await store.dispatch('categories/updateCategory', { id: categoryId, category });
-        toast.success('Product updated successfully!');
-        uploadSuccess.value = true;
+        toast.success('Category updated successfully!');
         router.push({ name: 'admin.categories' });
 
     } catch (error) {
         toast.error('Failed to update category!');
-        uploadError.value = 'An error occurred while updating the category.';
+        console.error(error);
     } finally {
         uploading.value = false;
     }

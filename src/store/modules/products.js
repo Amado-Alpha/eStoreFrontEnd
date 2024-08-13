@@ -11,7 +11,7 @@ export const SET_UPLOAD_ERROR = 'SET_UPLOAD_ERROR';
 export const SET_PRODUCTS = 'SET_PRODUCTS';
 export const SET_LOADING = 'SET_LOADING';
 export const SET_SERVER_ERROR = 'SET_SERVER_ERROR';
-export const DELETE_PROJECT = 'DELETE_PROJECT';
+export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 
 const state = {
@@ -44,7 +44,7 @@ const mutations = {
       state.products.splice(index, 1, updatedProduct);
     }
   },
-  [DELETE_PROJECT]: (state, productId) =>
+  [DELETE_PRODUCT]: (state, productId) =>
     state.products.filter((product) => product.id !== productId),
 };
 
@@ -134,13 +134,22 @@ const actions = {
         data: { data },
       } = response;
 
-      // console.log('PRODUCTS:', data);
-
       commit('SET_PRODUCTS', data);
     } catch (error) {
       commit('SET_ERROR', error);
     } finally {
       commit('SET_LOADING', false);
+    }
+  },
+
+  async deleteProduct({ commit }, id) {
+    try {
+      const res = await axiosClient.delete(`/products/${id}`);
+      return res;
+    } catch (error) {
+      commit('SET_SERVER_ERROR', 'Failed to delete project from server.');
+      console.log(error);
+      throw error;
     }
   },
 };

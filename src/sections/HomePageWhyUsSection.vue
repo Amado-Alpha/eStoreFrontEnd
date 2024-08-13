@@ -11,7 +11,7 @@
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         <div v-for="(item, index) in items" :key="index"
-          class="bg-white rounded-lg p-6 shadow-md transform transition duration-300 hover:scale-105 hover:shadow-xl">
+          class="section-item bg-white rounded-lg p-6 shadow-md transform transition duration-300 hover:scale-105 hover:shadow-xl">
           <div class="flex justify-center mb-4">
             <i :class="item.iconClass" class="text-green-500 text-4xl"></i>
           </div>
@@ -24,7 +24,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const items = ref([
   {
@@ -48,6 +52,31 @@ const items = ref([
     description: 'Our team of experts is dedicated to providing you with the best solutions and advice.'
   }
 ]);
+
+onMounted(() => {
+
+  const items = document.querySelectorAll('.section-item');
+
+  items.forEach((item, index) => {
+    gsap.from(item, {
+      scrollTrigger: {
+        trigger: item,
+        start: "top 80%",
+        end: "bottom 20%",
+        toggleActions: "play none none none",
+      },
+      opacity: 0,
+      y: 70,
+      scale: 0.95,
+      duration: 0.3,
+      delay: index * 0.2, // Delay each item based on its index
+      ease: "power2.out",
+      filter: "blur(10px)", // Start with blur
+      clearProps: "filter" // Clear blur after animations
+    });
+  });
+});
+
 </script>
 
 <style scoped>

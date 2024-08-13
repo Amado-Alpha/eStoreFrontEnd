@@ -56,7 +56,7 @@ const registerUser = async () => {
         };
         await store.dispatch('users/register', user);
         alert('User registered successfully!');
-        router.push('/login');
+        router.push({ name: 'admin.users' });
     } catch (error) {
         console.error(error);
         alert('Registration failed');

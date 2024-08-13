@@ -1,9 +1,3 @@
-Tasks
-1. Products carousel
-2. Partners section
-3. Projects page
-4. General products page
-5. 
 
 concepts
 1. w-10/12
@@ -19,58 +13,29 @@ CHARGES
 
                        FRONT-END
 
-1. For the button that says view all products, it should be swinging to engage users.
-2. Get rid of the search icon on the navbar (It makes sense to have it only in the products page,
-   so that customers can search for products). The searching can be structured to allow searching for
-   categories and also custom searches. (This is better implemented after we have full loaded the data
-   from the server).
+1. Look into transition options for image slider (especially the projects showcase section)
+2. Add formatting to the price column of the products (Amounts should be comma separated eg. 15,000)
+3. Test validation for all forms.
+4. Scroll triggered animations.
+5. Add features and categories to admin panel.
+6. Find a nice opacity to provide a shade for hero section carousel. cap: 1100 for all.
 
-
-3. Add a phone number and social media links on top of the navbar, that will be hidden as we scroll
-    down, but reshown again when we attempt to scroll up.
-
-4. Section headers shouldn't be too bright (Hint: You can use gray-500)
-5. Look into transition options for image slider (especially the projects showcase section)
-
-6. In the forms that will involve uploading a picture, implement a logic that will check the size of
-    the picture. It shouldn't be too small or too large in size (meaning width and length) so as not
-    to mess up the layout.
-7. CAROUSEL size should be decreased for mobile phones.
-8. Add formatting to the price column of the products (Amounts should be comma separated eg. 15,000)
-9. Test validation for all forms.
-
-10. Error handling in the adding project part
+7. Error handling in the adding project part
    1. A user should be allowed to add a project without features and an error shouldn't be thrown out
-11. Improve the user alerts in case of error (Because right now, there are things like alerts which are
-   not really user friendly).
-12. Which is the best place to store your error handling logic.
-13. Scroll triggered animations (ref. Tigo Tz official website)
-14. Find an amazing alternative to a carousel (That will so nice and engaging).
-15. Table pagination buttons should be visible only when the items > itemsPerPage
-16. The forms in the admin pages should be hidden, on clicking a button should they be visible.
-
-EXTRAS (OPTIONAL)
-15. Special announcement section. (This weekend offer)
+8. Which is the best place to store your error handling logic.
+9. Scroll triggered animations (ref. Tigo Tz official website)
+10. Table pagination buttons should be visible only when the items > itemsPerPage
+11. Making the footer to always stay on the bottom position regardless of the page content.
 
 FINITO!!!
 
                         BACK-END
-1. There is a multi-valued field(technologies) in the projects table (That's a poor design)
-2. Create a testimonials table.
-3. Get rid of the technologies in the projects table, NO NEED FOR 'EM.
-4. Create the team members table for about us page.
-5. Create An admin panel that you can use to update all the details.
-   i) An admin should be able to create another admin.
-   ii) When you hit the register user endpoint, the token generated should be relayed to the
-       frontend logic so that it's included in the code that accesses the authourized endpoints.
-       Because right now the work to do so is quite manual.
+1. Check if the rule is enforced (Deleting a category should delete all the products in it).
+   Add an additional warning " DELETING THIS CATEGORY MEANS THAT YOU'RE DELETING ALL THE PRODUCTS
+   ASSOCIATED WITH THIS CATEGORY";
 
 
-PAGES
-1. Services
-2. Products
-3. Projects
-5. About us
+
 
 
 DESIGN PRINCIPLES FOR FRONT-END (MY OWN OBSERVATION)
@@ -90,7 +55,6 @@ TO LEARN
 
 3. For the amount of time i have wasted trying to fight the sidebar, a tutorial on sidebars with vue a
    and tailwind is SOOOO important.
-4. The concept of route model binding.
 
 
 TIPS FOR ARTICLE

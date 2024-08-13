@@ -54,5 +54,15 @@ export default {
   plugins: [
     require('flowbite/plugin'),
     require("tw-elements/plugin.cjs"),
+    function ({ addUtilities }) {
+      addUtilities(
+        {
+          '.translate-z-0': {
+            transform: 'translateZ(0)',
+          },
+        },
+        ['responsive', 'hover']
+      );
+    },
   ],
 }

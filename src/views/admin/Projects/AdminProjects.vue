@@ -67,8 +67,8 @@
                                     class="bg-red-600 text-white py-1 px-2 rounded-md shadow-md hover:bg-red-700">
                                     <i class="fa-solid fas fa-trash"></i>
                                 </button>
-                                <DeleteConfirmationModal :isOpen="showDeleteModal" @close="showDeleteModal = false"
-                                    @confirm="confirmDelete" />
+                                <DeleteConfirmationModal :isOpen="showDeleteModal" :warningMessage="warningMessage"
+                                    @close="showDeleteModal = false" @confirm="confirmDelete" />
                             </td>
                         </tr>
                     </tbody>
@@ -185,13 +185,15 @@ const imageUploadInput = ref(null);
 const projects = computed(() => store.state.projects.projects);
 const features = computed(() => store.state.features.features);
 const uploading = computed(() => store.state.projects.uploading);
-const uploadError = computed(() => store.state.projects.uploadError);
-const serverError = computed(() => store.state.projects.serverError);
-const uploadSuccess = computed(() => store.state.projects.uploadSuccess);
+
+console.log('Projects computed:', projects.value)
 
 const fetchProjects = async () => {
-    await store.dispatch('projects/fetchProjects')
+    const response = await store.dispatch('projects/fetchProjects');
+    console.log('Projects resp.', response)
 };
+
+// const fetchProjects = () => store.dispatch('projects/fetchProjects');
 
 // Store dispatches
 const fetchFeatures = () => store.dispatch('features/fetchFeatures');
@@ -303,18 +305,24 @@ const scrollToPosition = () => {
 // Delete variables
 const showDeleteModal = ref(false);
 const projectIdToDelete = ref(null);
+const warningMessage = ref('');
 
 const openDeleteModal = (projectId) => {
     projectIdToDelete.value = projectId;
+    warningMessage.value = "Are you want to delete this project ?"
     showDeleteModal.value = true;
 };
 
 const confirmDelete = async () => {
     try {
-        await store.dispatch('projects/deleteProject', projectIdToDelete.value);
-        fetchProjects();
+        const res = await store.dispatch('projects/deleteProject', projectIdToDelete.value);
+        if (res.status === 204) {
+            toast.success('Project deleted successful');
+            fetchProjects();
+        }
         showDeleteModal.value = false;
     } catch (error) {
+        toast.error("Failed to delete project");
         console.error('Failed to delete project:', error);
     }
 };
@@ -330,9 +338,8 @@ const onFileChange = (e) => {
 };
 
 const saveProject = async () => {
-    if (!image.value) return;
 
-    // console.log('SELECTED FEATURE IDs:', selectedFeatureIds.value);
+    if (!image.value) return;
 
     try {
         const imageUrlFromCloudinary = await store.dispatch('projects/uploadImage', image.value);
@@ -345,7 +352,6 @@ const saveProject = async () => {
                 features: selectedFeatureIds.value
             };
 
-            console.log('Project to add PAYLOAD:', project)
             // Resetting form
             projectTitle.value = '';
             projectDescription.value = '';
@@ -358,6 +364,8 @@ const saveProject = async () => {
             await store.dispatch('projects/addProject', project);
             toast.success('Project created successfully!')
             fetchProjects();
+        } else {
+            toast.error('Failed creating a project!')
         }
     } catch (error) {
         console.error(error);

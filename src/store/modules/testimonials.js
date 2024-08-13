@@ -47,7 +47,9 @@ const mutations = {
     }
   },
   [DELETE_TESTIMONIAL]: (state, testimonialId) =>
-    state.testimonials.filter((testimonial) => testimonial.id !== testimonialId),
+    state.testimonials.filter(
+      (testimonial) => testimonial.id !== testimonialId
+    ),
 };
 
 const actions = {
@@ -137,19 +139,27 @@ const actions = {
     try {
       const response = await axiosClient.get('/testimonials');
 
-      // console.log(response.data.data);
       //Destructuring
       const {
         data: { data },
       } = response;
-
-      // console.log('PRODUCTS:', data);
-
       commit(SET_TESTIMONIALS, data);
     } catch (error) {
       commit(SET_ERROR, error);
     } finally {
       commit(SET_LOADING, false);
+    }
+  },
+
+  async deleteTestimonial({ commit }, id) {
+    try {
+      const res = await axiosClient.delete(`/testimonials/${id}`);
+      commit('DELETE_TESTIMONIAL', id);
+      return res;
+    } catch (error) {
+      commit('SET_SERVER_ERROR', 'Failed to delete project from server.');
+      console.log(error);
+      throw error;
     }
   },
 };

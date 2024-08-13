@@ -57,8 +57,8 @@
                                     class="bg-red-600 text-white py-1 px-2 rounded-md shadow-md hover:bg-red-700">
                                     <i class="fa-solid fas fa-trash"></i>
                                 </button>
-                                <DeleteConfirmationModal :isOpen="showDeleteModal" @close="showDeleteModal = false"
-                                    @confirm="confirmDelete" />
+                                <DeleteConfirmationModal :isOpen="showDeleteModal" :warningMessage="warningMessage"
+                                    @close="showDeleteModal = false" @confirm="confirmDelete" />
                             </td>
                         </tr>
                     </tbody>
@@ -170,14 +170,19 @@ const imageUploadInput = ref(null);
 // Computed properties
 const products = computed(() => store.state.products.products);
 const categories = computed(() => store.state.categories.categories);
+const projects = computed(() => store.state.projects.projects);
 const uploading = computed(() => store.state.products.uploading);
-const uploadError = computed(() => store.state.products.uploadError);
-const uploadSuccess = computed(() => store.state.products.uploadSuccess);
+
+
+console.log('My projects from products:', projects.value);
 
 // Store dispatches
 const fetchProducts = () => store.dispatch('products/fetchProducts');
 const fetchCategories = () => store.dispatch('categories/fetchCategories');
 
+// const fetchProducts = async () => {
+//     await store.dispatch('products/fetchProducts');
+// }
 
 /**
  * TABLE LOGIC 
@@ -226,22 +231,28 @@ const scrollToPosition = function () {
 /**
  * DELETE PROJECT
  */
-const projectIdToDelete = ref(null);
+const productIdToDelete = ref(null);
 const showDeleteModal = ref(false);
+const warningMessage = ref('');
 
-const openDeleteModal = (projectId) => {
-    projectIdToDelete.value = projectId;
+const openDeleteModal = (productId) => {
+    productIdToDelete.value = productId;
     showDeleteModal.value = true;
+    warningMessage.value = "Are you sure you want to delete this product?"
 };
 
 const confirmDelete = async () => {
     try {
-        await store.dispatch('projects/deleteProduct', productIdToDelete.value);
+        const res = await store.dispatch('products/deleteProduct', productIdToDelete.value);
+        if (res.status === 204) {
+            toast.success('Product deleted successfully!');
+            fetchProducts();
+        }
         showDeleteModal.value = false;
-        toast.success('Product deleted successfully!');
     } catch (error) {
         console.error('Failed to delete product:', error);
         toast.error('Failed to delete product');
+        showDeleteModal.value = false;
     }
 };
 
@@ -283,6 +294,9 @@ const saveProduct = async () => {
             //Adding product to the state
             await store.dispatch('products/addProduct', product);
             toast.success('Product created successfully!');
+
+            //Immidiately updating the state after saving.
+            fetchProducts();
         }
     } catch (error) {
         console.error(error);

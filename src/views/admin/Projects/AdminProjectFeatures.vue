@@ -2,7 +2,7 @@
     <div class="px-8">
         <!-- Products table -->
         <div class="container mx-auto p-4 font-roboto">
-            <h2 ref="tableTopPosition" class="text-2xl font-bold mb-8 text-center text-gray-700">PRODUCTS</h2>
+            <h2 ref="tableTopPosition" class="text-2xl font-bold mb-8 text-center text-gray-700">PROJECT FEATURES</h2>
             <div class="overflow-x-auto">
                 <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden text-left rtl:text-right">
                     <thead class="bg-green-600 text-gray-200 uppercase">
@@ -19,10 +19,9 @@
                         </tr>
                         <tr v-for="feature in paginatedFeatures" :key="feature.id"
                             class="hover:bg-gray-100 odd:bg-gray-100 even:bg-green-100">
-                            <td class="py-3 px-4 border-b">{{ feature.name }}</td>
-                            <td class="py-3 px-4 border-b">{{ feature.feature.name }}</td>
+                            <td class="py-3 px-4 border-b">{{ feature.description }}</td>
                             <td class="py-3 px-4 border-b">
-                                <router-link :to="{ name: 'admin.edit-feature', params: { id: feature.id } }"
+                                <router-link :to="{ name: 'admin.edit-project-feature', params: { id: feature.id } }"
                                     class="bg-blue-600 text-white py-1 px-2 rounded-md mr-2 shadow-md hover:bg-blue-700">
                                     <i class="fa-solid fas fa-edit"></i>
                                 </router-link>
@@ -30,8 +29,8 @@
                                     class="bg-red-600 text-white py-1 px-2 rounded-md shadow-md hover:bg-red-700">
                                     <i class="fa-solid fas fa-trash"></i>
                                 </button>
-                                <DeleteConfirmationModal :isOpen="showDeleteModal" @close="showDeleteModal = false"
-                                    @confirm="confirmDelete" />
+                                <DeleteConfirmationModal :isOpen="showDeleteModal" :warningMessage="warningMessage"
+                                    @close="showDeleteModal = false" @confirm="confirmDelete" />
                             </td>
                         </tr>
                     </tbody>
@@ -70,9 +69,10 @@
                 <form @submit.prevent="saveFeature" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 
                     <div class="mb-4">
-                        <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Feature description</label>
+                        <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Feature
+                            description</label>
                         <input v-model="featureDescription" type="text" placeholder="eg. Speech recognition" required
-                            id="name"
+                            id="description"
                             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     </div>
 
@@ -157,19 +157,27 @@ const scrollToPosition = function () {
 /**
  * DELETE FEATURE
  */
-const categoryIdToDelete = ref(null);
+const featureIdToDelete = ref(null);
 const showDeleteModal = ref(false);
+const warningMessage = ref('');
 
-const openDeleteModal = (projectId) => {
-    categoryIdToDelete.value = projectId;
+const openDeleteModal = (featureId) => {
+    featureIdToDelete.value = featureId;
+    warningMessage.value = "Are you sure you want to delete this project feature ?"
     showDeleteModal.value = true;
 };
 
 const confirmDelete = async () => {
     try {
-        await store.dispatch('features/deleteCategory', categoryIdToDelete.value);
+        const response = await store.dispatch('features/deleteFeature', featureIdToDelete.value);
+        if (response.status === 204) {
+            toast.success('Feature deleted successfully!');
+            fetchFeatures();
+        } else {
+            toast.error('Failed to delete feature');
+        }
         showDeleteModal.value = false;
-        toast.success('Feature deleted successfully!');
+
     } catch (error) {
         console.error('Failed to delete feature:', error);
         toast.error('Failed to delete feature');
@@ -185,13 +193,14 @@ const saveFeature = async () => {
 
     try {
         const feature = {
-            name: featureDesription.value,
+            description: featureDesription.value,
         };
         //Resetting form
         featureDesription.value = '';
 
         await store.dispatch('features/addFeature', feature);
         toast.success('Feature created successfully!');
+        fetchFeatures();
 
     } catch (error) {
         console.error(error);

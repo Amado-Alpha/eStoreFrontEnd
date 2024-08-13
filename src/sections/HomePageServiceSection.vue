@@ -10,9 +10,9 @@
                         Discover the range of services we offer to help you achieve the results you're after.
                     </p>
                 </div>
-                <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+                <div class="services-container grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
                     <div v-for="service in services" :key="service.id"
-                        class="font-roboto bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden hover:scale-105 transform transition duration-300 p-6 text-center">
+                        class="service-item font-roboto bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden hover:scale-105 transform transition duration-300 p-6 text-center">
                         <div class="flex items-center justify-center h-16 w-16 mx-auto mb-4">
                             <i :class="service.icon" class="text-green-500 text-4xl"></i>
                         </div>
@@ -30,7 +30,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, nextTick } from 'vue';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const services = ref([
     {
@@ -70,6 +74,30 @@ const services = ref([
         description: "Wide range of electronic devices for sale, from the latest gadgets to essential tech tools."
     }
 ]);
+
+onMounted(() => {
+
+    const items = document.querySelectorAll('.service-item');
+
+    items.forEach((item, index) => {
+        gsap.from(item, {
+            scrollTrigger: {
+                trigger: item,
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play none none none",
+            },
+            opacity: 0,
+            y: 70,
+            scale: 0.95,
+            duration: 0.3,
+            delay: index * 0.2, // Delay each item based on its index
+            ease: "power2.out",
+            filter: "blur(10px)", // Start with blur
+            clearProps: "filter" // Clear blur after animations
+        });
+    });
+});
 </script>
 
 <style scoped>

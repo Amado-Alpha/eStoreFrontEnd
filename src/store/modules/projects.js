@@ -11,7 +11,7 @@ import axiosClient from '../../axios';
 import axios from 'axios';
 
 // Mutation types
-export const SET_PROJECT = 'SET_PROJECT';
+export const SET_NEW_PROJECT = 'SET_NEW_PROJECT';
 export const SET_UPLOAD_SUCCESS = 'SET_UPLOAD_SUCCESS';
 export const SET_UPLOADING = 'SET_UPLOADING';
 export const SET_UPLOAD_ERROR = 'SET_UPLOAD_ERROR';
@@ -36,7 +36,7 @@ const getters = {
 };
 
 const mutations = {
-  [SET_PROJECT]: (state, project) => state.projects.push(project),
+  [SET_NEW_PROJECT]: (state, project) => state.projects.push(project),
   [SET_PROJECTS]: (state, projects) => (state.projects = projects),
   [SET_UPLOADING]: (state, uploading) => (state.uploading = uploading),
   [SET_UPLOAD_ERROR]: (state, error) => (state.uploadError = error),
@@ -51,9 +51,6 @@ const mutations = {
       state.projects.splice(index, 1, updatedProject);
     }
   },
-  // [DELETE_PROJECT]: (state, projectId) =>
-  //   state.projects.filter((project) => project.id !== projectId),
-
   [DELETE_PROJECT]: (state, projectId) => {
     state.projects = state.projects.filter(
       (project) => project.id !== projectId
@@ -105,7 +102,7 @@ const actions = {
 
       // End Data validation
       const res = await axiosClient.post('/projects', project);
-      commit('SET_PROJECT', project);
+      commit('SET_NEW_PROJECT', project);
       const {
         data: { data },
       } = res;
@@ -136,10 +133,10 @@ const actions = {
 
   // Updating a project to server and commiting it to state
   async updateProject({ commit }, { id, project }) {
-    console.log('PROJECT B4 TRY:', project);
+    // console.log('PROJECT B4 TRY:', project);
     try {
       const res = await axiosClient.put(`/projects/${id}`, project);
-      commit('SET_PROJECT', project);
+      commit('UPDATE_PROJECT', project);
       const {
         data: { data },
       } = res;
@@ -154,7 +151,7 @@ const actions = {
 
   // Fetching projects from server and commiting them to state
   async fetchProjects({ commit }) {
-    commit(SET_LOADING, true);
+    commit('SET_LOADING', true);
     try {
       const response = await axiosClient.get('/projects');
 
@@ -163,22 +160,20 @@ const actions = {
       const {
         data: { data },
       } = response;
-
-      console.log('FEATURES:', data[0].features[0].description.slice(0, 30));
-
       commit('SET_PROJECTS', data);
+      return data;
     } catch (error) {
       commit('SET_SERVER_ERROR', error);
     } finally {
-      commit(SET_LOADING, false);
+      commit('SET_LOADING', false);
     }
   },
 
   async deleteProject({ commit }, id) {
     try {
-      console.log('Project to delete:', id);
-      await axiosClient.delete(`/projects/${id}`);
+      const res = await axiosClient.delete(`/projects/${id}`);
       commit('DELETE_PROJECT', id);
+      return res;
     } catch (error) {
       commit('SET_SERVER_ERROR', 'Failed to delete project from server.');
       console.log(error);

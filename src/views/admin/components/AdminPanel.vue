@@ -155,7 +155,9 @@ onBeforeUnmount(() => {
 const menuItems = [
     { name: 'Dashboard', link: 'admin.home', icon: 'fa-solid fas fa-home' },
     { name: 'Products', link: 'admin.products', icon: 'fa-solid fas fa-box-open' },
+    { name: 'Categories', link: 'admin.categories', icon: 'fa-solid fas fa-tv' },
     { name: 'Projects', link: 'admin.projects', icon: 'fa-solid fas fa-project-diagram' },
+    { name: 'Features', link: 'admin.features', icon: 'fa-solid fas fa-plug' },
     { name: 'Users', link: 'admin.users', icon: 'fa-solid fas fa-users' },
     { name: 'Testimonials', link: 'admin.testimonials', icon: 'fa-solid fas fa-comments' },
 ];

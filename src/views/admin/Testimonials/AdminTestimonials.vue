@@ -64,8 +64,8 @@
                                     class="bg-red-600 text-white py-1 px-2 rounded-md shadow-md hover:bg-red-700">
                                     <i class="fa-solid fas fa-trash"></i>
                                 </button>
-                                <DeleteConfirmationModal :isOpen="showDeleteModal" @close="showDeleteModal = false"
-                                    @confirm="confirmDelete" />
+                                <DeleteConfirmationModal :isOpen="showDeleteModal" :warningMessage="warningMessage"
+                                    @close="showDeleteModal = false" @confirm="confirmDelete" />
                             </td>
                         </tr>
                     </tbody>
@@ -240,8 +240,11 @@ const scrollToPosition = function () {
  */
 const testimonialIdToDelete = ref(null);
 const showDeleteModal = ref(false);
+const warningMessage = ref('');
+
 const openDeleteModal = (testimonialId) => {
     testimonialIdToDelete.value = testimonialId;
+    warningMessage.value = "Are you sure you want to delete this testimonial ?"
     showDeleteModal.value = true;
 };
 
@@ -297,6 +300,7 @@ const saveTestimonial = async () => {
 
             await store.dispatch('testimonials/addTestimonial', testimonial);
             toast.success('Testimonial created successfully!');
+            fetchTestimonials();
         }
     } catch (error) {
         console.error(error);

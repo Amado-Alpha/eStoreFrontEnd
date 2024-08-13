@@ -25,6 +25,10 @@ import AdminTestimonials from '../views/admin/Testimonials/AdminTestimonials.vue
 import AdminRegister from '../views/admin/Users/AdminRegister.vue';
 import AdminLogin from '../views/admin/Users/AdminLogin.vue';
 import HeroSection from '../components/HeroSection.vue';
+import AdminProjectFeatures from '../views/admin/Projects/AdminProjectFeatures.vue';
+import AdminProjectFeaturesEdit from '../views/admin/Projects/AdminProjectFeaturesEdit.vue';
+import AdminProductCategories from '../views/admin/Products/AdminProductCategories.vue';
+import AdminProductCategoriesEdit from '../views/admin/Products/AdminProductCategoriesEdit.vue';
 
 const routes = [
   {
@@ -109,6 +113,17 @@ const routes = [
         component: AdminProductEdit,
         props: true,
       },
+      {
+        path: 'product-categories',
+        name: 'admin.categories',
+        component: AdminProductCategories,
+      },
+      {
+        path: 'edit-product-category/:id?/edit',
+        name: 'admin.edit-category',
+        component: AdminProductCategoriesEdit,
+        props: true,
+      },
 
       // Projects
       {
@@ -121,6 +136,17 @@ const routes = [
         path: 'projects',
         name: 'admin.projects',
         component: AdminProjects,
+      },
+      {
+        path: 'project-features',
+        name: 'admin.features',
+        component: AdminProjectFeatures,
+      },
+      {
+        path: 'edit-project-feature/:id?/edit',
+        name: 'admin.edit-project-feature',
+        component: AdminProjectFeaturesEdit,
+        props: true, // Pass route params as props to the component
       },
 
       // Testimonials

@@ -1,7 +1,7 @@
 <template>
-    <div class="bg-white">
-        <div class="container mx-auto py-12 lg:px-12 px-4 rounded-lg">
-            <div ref="moveMeUp" class="relative font-roboto text-center mb-2">
+    <div class="bg-white overflow-hidden translate-z-0">
+        <div class="container mx-auto py-12 lg:px-12 px-4 rounded-lg overflow-hidden">
+            <div ref="moveMeUp" class="projects-section relative font-roboto text-center mb-2">
                 <h2 class="text-3xl font-semibold text-gray-700 dark:text-white sm:text-5xl">
                     PROJECTS
                 </h2>
@@ -10,17 +10,12 @@
                     innovation in every endeavor.
                 </p>
             </div>
-            <div class="absolute top-0 left-1/2 transform -translate-x-1/2 mt-4">
-                <button @click="scrollToPreviousSection"
-                    class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full">
-                    Previous Section
-                </button>
-            </div>
+
             <swiper :direction="'vertical'" :slidesPerView="1" :spaceBetween="20" :pagination="{ clickable: true }"
                 :modules="modules" :loop="true" :autoplay="{ delay: 5000, disableOnInteraction: false }"
                 class="mySwiper">
                 <swiper-slide v-for="(project, index) in projects" :key="index"
-                    class="project-slide p-4 md:p-8 bg-green-600 rounded-lg grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 shadow-lg transform transition duration-500 hover:scale-105">
+                    class="project-slide p-4 md:p-8 bg-green-600 rounded-lg grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 shadow-lg transform transition duration-500 hover:scale-105 overflow-hidden">
                     <!-- <p>button</p> -->
 
                     <!-- Button to Scroll Up -->
@@ -78,9 +73,10 @@
         </div>
     </div>
 
-    <section ref="moveMeDown" class="bg-green-100">
+    <section ref="moveMeDown" class="bg-green-100 overflow-hidden">
         <div class="container min-h-[475px] font-sans mx-auto">
-            <div class="grid md:grid-cols-2 justify-center items-center max-md:text-center gap-8 p-8">
+            <div
+                class="announcement-section grid md:grid-cols-2 justify-center items-center max-md:text-center gap-8 p-8 overflow-hidden">
                 <div class="md:text-right max-md:mt-12 h-full">
                     <img src="https://media.istockphoto.com/id/1417897191/photo/african-american-black-male-college-student-stressed-and-overwhelmed-studying-in-front-of.jpg?s=612x612&w=0&k=20&c=VIJX_6AlNQj_wiaIK66TBwWxmEqcJ-2OQoQoituKj2Q="
                         alt="Premium Benefits"
@@ -118,12 +114,20 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination, Autoplay } from 'swiper/modules';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { data } from '../constants';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const modules = [Pagination, Autoplay];
 
 const moveMeDown = ref(null);
 const moveMeUp = ref(null);
+
+const projects = ref(data.projects);
 
 function scrollToNextSection() {
     if (moveMeDown.value) {
@@ -139,50 +143,37 @@ function scrollToPreviousSection() {
     }
 }
 
+onMounted(() => {
+    // Animate the Projects section
+    gsap.from(".projects-section", {
+        scale: 0.9,
+        opacity: 0,
+        duration: 1.2,
+        ease: "back.out(1.7)",
+        scrollTrigger: {
+            trigger: ".projects-section",
+            start: "top 90%",
+            end: "bottom 20%",
+            scrub: 1,
+            once: true,
+        },
+    });
 
-const projects = [
-    {
-        title: "Automated Car",
-        description:
-            "An innovative project showcasing an automated car capable of navigating through predefined routes with minimal human intervention. This project leverages advanced technologies to enhance driving efficiency and safety.",
-        rating: 5,
-        features: [
-            "Innovative and cutting-edge technology",
-            "Efficient and user-friendly design",
-            "Seamless integration with existing systems"
-        ],
-        image:
-            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi_tpcOWxyxnK5xABlSFZSLYQBqYs0amBx9GADOcnR6KqZbGd81NfOtd_K3Djdf4rtptrSJEp0cYnzW00KHEJ6z506aQNKBN3I6jiEKGOBMUpZFS6FZOt7Gy6LudX4caYyMwYaZyEFrZG4/s1600/20471483357907.jpg",
-    },
-    {
-        title: "Water Dispenser",
-        description:
-            "A smart water dispenser that provides instant access to clean drinking water. This project integrates IoT and cloud technologies to ensure reliable and efficient water dispensing.",
-        rating: 4,
-        features: [
-            "Instant access to clean drinking water",
-            "Integration with IoT and cloud technologies",
-            "Reliable and efficient water dispensing"
-        ],
-        image:
-            "https://circuitdigest.com/sites/default/files/inlineimages/u/Automatic-Water-Dispenser-using-Arduino-in-action.jpg",
-    },
-    {
-        title: "Smart Waste Bin",
-        description:
-            "A modern waste management solution featuring a smart bin that automatically sorts waste. This project aims to promote environmental sustainability through intelligent waste disposal.",
-        rating: 4,
-        features: [
-            "Automated waste sorting",
-            "Promotes environmental sustainability",
-            "Intelligent waste disposal"
-        ],
-        image:
-            "https://hackster.imgix.net/uploads/attachments/1600475/_GcIvnFXZzP.blob?auto=compress&w=1600&h=1200&fit=min&fm=jpg",
-    },
-
-];
-
+    // Animate the announcement section
+    gsap.from(".announcement-section", {
+        scale: 0.7,
+        opacity: 0,
+        duration: 1.2,
+        ease: "back.out(1.7)",
+        scrollTrigger: {
+            trigger: ".announcement-section",
+            start: "top 90%",
+            end: "bottom 20%",
+            scrub: 1,
+            once: true,
+        },
+    });
+});
 </script>
 
 <style scoped>
@@ -198,6 +189,7 @@ const projects = [
     display: grid;
     align-items: center;
     height: 100%;
+    overflow: hidden;
     /* Ensure each slide takes the full height */
 }
 
@@ -237,23 +229,5 @@ const projects = [
 
 .project-slide li {
     margin-bottom: 0.5rem;
-}
-
-.pulse {
-    animation: pulse 3.5s infinite;
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.1);
-    }
-
-    100% {
-        transform: scale(1);
-    }
 }
 </style>

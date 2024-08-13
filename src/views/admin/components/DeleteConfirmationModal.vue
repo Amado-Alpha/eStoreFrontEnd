@@ -4,8 +4,11 @@
             <div class="p-4 border-b">
                 <h3 class="text-lg font-medium">Confirm Deletion</h3>
             </div>
-            <div class="p-4">
-                <p>Are you sure you want to delete this project?</p>
+            <div v-if="warningMessage" class="p-4">
+                <p>{{ warningMessage }}</p>
+            </div>
+            <div v-else class="p-4">
+                <p>Are you sure you want to delete this ?</p>
             </div>
             <div class="p-4 border-t flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-2">
                 <button @click="cancel"
@@ -20,6 +23,7 @@
 <script setup>
 const props = defineProps({
     isOpen: Boolean,
+    warningMessage: String
 });
 
 const emit = defineEmits(['close', 'confirm']);
