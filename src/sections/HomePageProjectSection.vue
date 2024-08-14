@@ -1,7 +1,7 @@
 <template>
     <div class="bg-white overflow-hidden translate-z-0">
-        <div class="container mx-auto py-12 lg:px-12 px-4 rounded-lg overflow-hidden">
-            <div ref="moveMeUp" class="projects-section relative font-roboto text-center mb-2">
+        <div ref="moveMeUp" class="container mx-auto py-12 lg:px-12 px-4 rounded-lg overflow-hidden">
+            <div class="projects-section relative font-roboto text-center mb-2">
                 <h2 class="text-3xl font-semibold text-gray-700 dark:text-white sm:text-5xl">
                     PROJECTS
                 </h2>
@@ -139,7 +139,7 @@ function scrollToNextSection() {
 function scrollToPreviousSection() {
     if (moveMeUp.value) {
         const position = moveMeUp.value.offsetTop;
-        window.scrollTo({ top: position - 300, behavior: 'smooth' });
+        window.scrollTo({ top: position + 1200, behavior: 'smooth' });
     }
 }
 

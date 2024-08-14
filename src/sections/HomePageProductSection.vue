@@ -56,7 +56,7 @@ const modules = [Pagination, Navigation, Autoplay];
 
 const breakpoints = {
     640: {
-        slidesPerView: 1,
+        slidesPerView: 2,
         spaceBetween: 20,
     },
     768: {

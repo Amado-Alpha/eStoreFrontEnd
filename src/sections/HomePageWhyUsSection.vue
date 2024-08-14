@@ -9,7 +9,7 @@
           Discover why we stand out: unparalleled quality, innovative solutions, and a commitment to your satisfaction.
         </p>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8">
         <div v-for="(item, index) in items" :key="index"
           class="section-item bg-white rounded-lg p-6 shadow-md transform transition duration-300 hover:scale-105 hover:shadow-xl">
           <div class="flex justify-center mb-4">

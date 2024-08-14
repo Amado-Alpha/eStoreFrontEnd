@@ -10,7 +10,7 @@
                         Discover the range of services we offer to help you achieve the results you're after.
                     </p>
                 </div>
-                <div class="services-container grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+                <div class="services-container grid grid-cols-1  sm:grid-cols-2 md:grid-cols-3 gap-10">
                     <div v-for="service in services" :key="service.id"
                         class="service-item font-roboto bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden hover:scale-105 transform transition duration-300 p-6 text-center">
                         <div class="flex items-center justify-center h-16 w-16 mx-auto mb-4">
@@ -33,47 +33,11 @@
 import { ref, onMounted, nextTick } from 'vue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { data } from '../constants';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const services = ref([
-    {
-        id: 1,
-        title: "3D Printing",
-        icon: "fas fa-print",
-        description: "High-quality 3D printing services for prototypes, parts, and products with precision and efficiency."
-    },
-    {
-        id: 2,
-        title: "Software Development",
-        icon: "fas fa-laptop",
-        description: "Custom software solutions tailored to meet your business needs and drive innovation."
-    },
-    {
-        id: 3,
-        title: "Circuit Design and Development",
-        icon: "fas fa-microchip",
-        description: "Innovative circuit design and development services to bring your electronic projects to life."
-    },
-    {
-        id: 4,
-        title: "Computer Maintenance and Repair",
-        icon: "fas fa-tools",
-        description: "Comprehensive maintenance and repair services to keep your computers running smoothly."
-    },
-    {
-        id: 5,
-        title: "Tech Consultancy",
-        icon: "fas fa-user-tie",
-        description: "Expert tech consultancy services to help you make informed decisions and stay ahead of the curve."
-    },
-    {
-        id: 6,
-        title: "Selling of Electronic Devices",
-        icon: "fas fa-laptop",
-        description: "Wide range of electronic devices for sale, from the latest gadgets to essential tech tools."
-    }
-]);
+const services = ref(data.services);
 
 onMounted(() => {
 

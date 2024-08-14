@@ -1,6 +1,50 @@
 import { facebook, instagram, twitter } from '../assets/icons';
 
 export const data = {
+  services: [
+    {
+      id: 1,
+      title: '3D Printing',
+      icon: 'fas fa-print',
+      description:
+        'High-quality 3D printing services for prototypes, parts, and products with precision and efficiency.',
+    },
+    {
+      id: 2,
+      title: 'Software Development',
+      icon: 'fas fa-laptop',
+      description:
+        'Custom software solutions tailored to meet your business needs and drive innovation.',
+    },
+    {
+      id: 3,
+      title: 'Circuit Design and Development',
+      icon: 'fas fa-microchip',
+      description:
+        'Innovative circuit design and development services to bring your electronic projects to life.',
+    },
+    {
+      id: 4,
+      title: 'Computer Maintenance and Repair',
+      icon: 'fas fa-tools',
+      description:
+        'Comprehensive maintenance and repair services to keep your computers running smoothly.',
+    },
+    {
+      id: 5,
+      title: 'Tech Consultancy',
+      icon: 'fas fa-user-tie',
+      description:
+        'Expert tech consultancy services to help you make informed decisions and stay ahead of the curve.',
+    },
+    {
+      id: 6,
+      title: 'Selling of Electronic Devices',
+      icon: 'fas fa-laptop',
+      description:
+        'Wide range of electronic devices for sale, from the latest gadgets to essential tech tools.',
+    },
+  ],
   projects: [
     {
       title: 'Automated Car',

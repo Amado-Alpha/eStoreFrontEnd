@@ -1,6 +1,6 @@
 <template>
-    <HeroAboutUs header="Contact Us" />
-    <section class="contact-section py-12 bg-gray-100">
+    <HeroSectionContactPage />
+    <section class="contact-section bg-gray-100">
         <div class="container mx-auto lg:px-12 px-4">
             <!-- Contact Information -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
@@ -91,6 +91,7 @@
 import { ref } from 'vue';
 import OurTeam from './CompanyLeadership.vue';
 import HeroAboutUs from '../components/HeroAboutUs.vue';
+import HeroSectionContactPage from '../components/HeroSectionContactPage.vue';
 
 const form = ref({
     name: '',

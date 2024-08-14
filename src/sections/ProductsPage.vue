@@ -1,6 +1,6 @@
 <template>
-    <HeroAboutUs header="Shop with us" />
-    <section ref="productsTopPosition" class="featured-products bg-gray-100 mt-24 mb-8">
+    <HeroSectionProductsPage />
+    <section ref="productsTopPosition" class="featured-products bg-gray-100 mb-8">
         <div class="max-w-screen-xl mx-auto lg:px-12 px-4">
             <!-- Search and Filter -->
             <div class="flex flex-col lg:flex-row justify-between items-center mb-8">
@@ -18,15 +18,17 @@
                 </select>
             </div>
 
-            <!-- No Products Message -->
-            <div v-if="filteredProducts.length === 0" class="text-center text-gray-500">
-                No products match your search criteria.
+            <div v-if="filteredProducts.length === 0 && isSearchActive"
+                class="flex flex-col items-center justify-center h-64 text-center">
+                <img :src="oversight" alt="No products found" class="w-32 h-32 mb-4">
+                <p class="text-lg font-semibold text-gray-700 mb-2">Oops! No products found.</p>
+                <p class="text-gray-500">Try adjusting your search or filter criteria.</p>
             </div>
-
             <!-- Product Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- <div v-for="(product, index) in (searchQuery.value || selectedCategory.value ? filteredPaginatedProducts : paginatedProducts)" -->
-                <div v-for="(product, index) in filteredPaginatedProducts" :key="index"
+            <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- <div v-for="(product, index) in paginatedProducts" :key="index" -->
+                <div v-for="(product, index) in (filteredProducts.length > 0 ? filteredPaginatedProducts : paginatedProducts)"
+                    :key="index"
                     class="product-card bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
                     <img :src="product.image" :alt="product.name"
                         class="w-[400px] h-[300px] object-fill rounded-t-lg mb-4">
@@ -60,11 +62,15 @@
         </div>
     </section>
 </template>
+
+
 <script setup>
 
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import HeroAboutUs from '../components/HeroAboutUs.vue';
 import { data } from '../constants';
+import { oversight } from '../assets/icons';
+import HeroSectionProductsPage from '../components/HeroSectionProductsPage.vue';
 
 const searchQuery = ref('');
 const selectedCategory = ref('');
@@ -76,15 +82,77 @@ const products = ref(data.products);
 */
 const productsPerPage = 6;
 const currentPage = ref(1);
+const isSearchActive = ref(false);
 
+/*
+
+WATCHERS ARE THE BEST TOOLS TO TRACK THE STATE OF COMPUTED PROPERTIES
+THIS IS VERY USEFULL IN DEBUGING AS THE CONSOLE IS BEING UPDATED IN REAL TIME
+
+watch([searchQuery, selectedCategory], () => {
+    console.log('Search Query:', searchQuery.value);
+    console.log('Selected Category:', selectedCategory.value);
+});
+
+
+
+// Watchers to reset currentPage when search or filter changes
+watch([currentPage], () => {
+    console.log('CURRENT PAGE', currentPage.value);
+});
+
+*/
+
+
+/*
+    RETURNING THE USER TO THE PAGE HE WAS ON BEFORE PERFORMING A SEARCH
+*/
+
+const lastPageBeforeSearch = ref(1);
+
+// Watch for changes in searchQuery
+watch(searchQuery, (newQuery) => {
+    if (newQuery) {
+        if (!isSearchActive.value) {
+            // Only set lastPageBeforeSearch if search is just starting
+            lastPageBeforeSearch.value = currentPage.value;
+            isSearchActive.value = true;
+        }
+        currentPage.value = 1;
+    } else {
+        if (isSearchActive.value) {
+            currentPage.value = lastPageBeforeSearch.value;
+            isSearchActive.value = false;
+        }
+    }
+});
+
+// Watch for changes in selectedCategory
+watch(selectedCategory, (newCategory) => {
+    if (newCategory) {
+        if (!isSearchActive.value) {
+            // Only set lastPageBeforeSearch if filter is just starting
+            lastPageBeforeSearch.value = currentPage.value;
+            isSearchActive.value = true;
+        }
+        currentPage.value = 1;
+    } else {
+        if (isSearchActive.value) {
+            currentPage.value = lastPageBeforeSearch.value;
+            isSearchActive.value = false;
+        }
+    }
+});
 
 // Filtered products
 const filteredProducts = computed(() => {
+    if (!searchQuery.value && !selectedCategory.value) {
+        return [];
+    }
     return products.value.filter(product => {
         const matchesSearch = product.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
             product.description.toLowerCase().includes(searchQuery.value.toLowerCase());
         const matchesCategory = !selectedCategory.value || product.category === selectedCategory.value;
-        console.log('Search match:', matchesCategory);
         return matchesSearch && matchesCategory;
     });
 });
@@ -96,6 +164,11 @@ const filteredPaginatedProducts = computed(() => {
     return filteredProducts.value.slice(startIndex, endIndex);
 });
 
+const paginatedProducts = computed(() => {
+    const startIndex = (currentPage.value - 1) * productsPerPage;
+    const endIndex = currentPage.value * productsPerPage;
+    return products.value.slice(startIndex, endIndex);
+})
 
 // Total pages for unfiltered products
 const totalPagesUnfiltered = computed(() => Math.ceil(products.value.length / productsPerPage));
@@ -103,9 +176,13 @@ const totalPagesUnfiltered = computed(() => Math.ceil(products.value.length / pr
 // Total pages for filtered products
 const totalPagesFiltered = computed(() => Math.ceil(filteredProducts.value.length / productsPerPage));
 
+watch(totalPagesFiltered, () => {
+    console.log('Number of pages during search:', totalPagesFiltered.value);
+})
+
 // Total pages to use
 const totalPages = computed(() => {
-    return searchQuery.value || selectedCategory.value ? totalPagesFiltered.value : totalPagesUnfiltered.value;
+    return (searchQuery.value || selectedCategory.value) ? totalPagesFiltered.value : totalPagesUnfiltered.value;
 });
 
 
