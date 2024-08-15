@@ -1,9 +1,9 @@
 <template>
     <HeroSectionContactPage />
-    <section class="contact-section bg-gray-100">
+    <section class="contact-section bg-gray-100 mt-8">
         <div class="container mx-auto lg:px-12 px-4">
             <!-- Contact Information -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8 mb-12">
                 <div class="bg-white shadow-md rounded-lg p-8">
                     <h2 class="text-2xl font-semibold text-gray-800 mb-4">Our Address</h2>
                     <div class="space-y-4">

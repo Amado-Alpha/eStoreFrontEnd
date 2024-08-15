@@ -1,55 +1,35 @@
 <template>
-    <section class="bg-gradient-to-b from-green-200 to-white py-16 lg:py-16">
-        <div class="max-w-screen-xl mx-auto flex flex-col lg:flex-row items-center px-6 lg:px-12">
-            <!-- Left Side: Text Content -->
-            <div class="lg:w-1/2 mb-12 lg:mb-0">
-                <h1 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Explore Our Latest Electronics</h1>
-                <p class="text-lg text-gray-600 mb-8">
-                    Discover a wide range of cutting-edge gadgets and tools designed to enhance your life. Browse
-                    through our collection and find the perfect product for your needs.
-                </p>
-                <a href="#products"
-                    class="inline-block bg-green-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-green-600 transition duration-300">
-                    Shop Now
-                </a>
-            </div>
+    <section
+        class="hero-section bg-gradient-to-b from-green-100 to-white flex flex-col lg:flex-row items-center justify-center lg:justify-between pt-4 px-10 overflow-hidden">
+        <!-- Left Side: Illustration -->
+        <div class="illustration w-full lg:w-1/2 mb-8 lg:mb-0">
+            <img :src="productsPageIllustration" alt="Customer Service Illustration" class="w-full h-auto">
+        </div>
 
-            <!-- Right Side: Illustration -->
-            <div class="lg:w-1/2 animate-fade-in-right">
-                <img :src="productsPageIllustration" alt="Shopping Illustration" class="w-full h-auto">
-            </div>
+        <!-- Right Side: Text and Buttons -->
+        <div class="text-center lg:text-right lg:w-1/2">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">Explore Our products</h1>
+            <p class="text-lg text-gray-600 mb-8"> Discover a wide range of cutting-edge gadgets and tools designed to
+                enhance your life. Browse
+                through our collection and find the perfect product for your needs.</p>
         </div>
     </section>
 </template>
 
 <script setup>
-
+import { onMounted } from 'vue';
+import { gsap } from 'gsap';
 import { productsPageIllustration } from '../assets/icons';
 
+onMounted(() => {
+    gsap.from('.hero-section h1', { y: 50, opacity: 0, duration: 1, ease: 'power2.out' });
+    gsap.from('.hero-section p', { y: 50, opacity: 0, duration: 1, delay: 0.2, ease: 'power2.out' });
+    gsap.from('.illustration img', { x: -50, opacity: 0, duration: 1, delay: 0.6, ease: 'power2.out' });
+});
 </script>
 
 <style scoped>
-@keyframes fade-in-up {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fade-in-right {
-    0% {
-        opacity: 0;
-        transform: translateX(-20px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
+/* .hero-section {
+    min-height: 60vh;
+} */
 </style>

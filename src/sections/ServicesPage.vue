@@ -1,14 +1,14 @@
 <template>
-    <HeroAboutUs header="Our Services" />
+    <HeroSectionServicesPage />
     <section class="py-16 bg-white">
         <div class="container mx-auto px-4 lg:px-8">
             <!-- Page Title -->
             <!-- Services Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8">
                 <!-- Service Card -->
                 <div v-for="service in services" :key="service.name"
                     class="bg-white shadow-md rounded-lg p-8 text-center">
-                    <div class="text-4xl text-yellow-300 mb-4">
+                    <div class="text-4xl text-green-400 mb-4">
                         <i :class="service.icon"></i> <!-- FontAwesome icon for Selling Electronic Devices -->
                     </div>
                     <h2 class="text-xl font-semibold text-gray-800 mb-4">{{ service.name }}</h2>
@@ -28,7 +28,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import HeroAboutUs from '../components/HeroAboutUs.vue';
+import HeroSectionServicesPage from '../components/HeroSectionServicesPage.vue';
 
 const services = ref([
     {

@@ -54,7 +54,7 @@ onMounted(() => {
             opacity: 0,
             y: 70,
             scale: 0.95,
-            duration: 0.3,
+            duration: 0.2,
             delay: index * 0.2, // Delay each item based on its index
             ease: "power2.out",
             filter: "blur(10px)", // Start with blur

@@ -1,6 +1,6 @@
 <template>
     <HeroAboutUs header="About Us" />
-    <section class="font-roboto py-12 bg-gray-100">
+    <section class="font-roboto py-12">
         <div class="container mx-auto lg:px-12 px-4">
             <!-- Company Overview -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 items-center bg-white shadow-md rounded-lg p-8">

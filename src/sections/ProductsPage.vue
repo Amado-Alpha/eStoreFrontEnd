@@ -1,6 +1,6 @@
 <template>
     <HeroSectionProductsPage />
-    <section ref="productsTopPosition" class="featured-products bg-gray-100 mb-8">
+    <section ref="productsTopPosition" class="featured-products bg-gray-100 mb-8 mt-8">
         <div class="max-w-screen-xl mx-auto lg:px-12 px-4">
             <!-- Search and Filter -->
             <div class="flex flex-col lg:flex-row justify-between items-center mb-8">
@@ -67,7 +67,6 @@
 <script setup>
 
 import { ref, computed, watch } from 'vue';
-import HeroAboutUs from '../components/HeroAboutUs.vue';
 import { data } from '../constants';
 import { oversight } from '../assets/icons';
 import HeroSectionProductsPage from '../components/HeroSectionProductsPage.vue';
@@ -80,7 +79,7 @@ const products = ref(data.products);
 /* 
     SEARCH LOGIC 
 */
-const productsPerPage = 6;
+const productsPerPage = 12;
 const currentPage = ref(1);
 const isSearchActive = ref(false);
 

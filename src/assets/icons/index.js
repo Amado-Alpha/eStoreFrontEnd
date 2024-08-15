@@ -8,6 +8,8 @@ import closeIcon from './close-icon.png';
 import oversight from './oversight.svg';
 import productsPageIllustration from './productsPageIllustration.svg';
 import contact from './contact.svg';
+import about from './about.svg';
+import services from './services.svg';
 
 export {
   copyrightSign,
@@ -20,4 +22,6 @@ export {
   oversight,
   productsPageIllustration,
   contact,
+  about,
+  services,
 };
