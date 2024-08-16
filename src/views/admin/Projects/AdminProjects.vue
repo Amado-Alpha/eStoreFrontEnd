@@ -260,7 +260,7 @@ const removeFeature = (feature) => {
  * TABLE LOGIC
  */
 const currentPage = ref(1);
-const itemsPerPage = ref(5);
+const itemsPerPage = ref(12);
 const tableTopPosition = ref(null);
 
 const paginatedProjects = computed(() => {
@@ -300,35 +300,6 @@ const scrollToPosition = () => {
 
 
 /**
- * DELETE PROJECT
- */
-// Delete variables
-const showDeleteModal = ref(false);
-const projectIdToDelete = ref(null);
-const warningMessage = ref('');
-
-const openDeleteModal = (projectId) => {
-    projectIdToDelete.value = projectId;
-    warningMessage.value = "Are you want to delete this project ?"
-    showDeleteModal.value = true;
-};
-
-const confirmDelete = async () => {
-    try {
-        const res = await store.dispatch('projects/deleteProject', projectIdToDelete.value);
-        if (res.status === 204) {
-            toast.success('Project deleted successful');
-            fetchProjects();
-        }
-        showDeleteModal.value = false;
-    } catch (error) {
-        toast.error("Failed to delete project");
-        console.error('Failed to delete project:', error);
-    }
-};
-
-
-/**
  * PROJECT FORM LOGIC
  */
 const onFileChange = (e) => {
@@ -361,17 +332,55 @@ const saveProject = async () => {
                 imageUploadInput.value.value = '';
             }
 
-            await store.dispatch('projects/addProject', project);
-            toast.success('Project created successfully!')
-            fetchProjects();
+            const response = await store.dispatch('projects/addProject', project);
+            if (response.status === 201) {
+                toast.success('Project created successfully!')
+                fetchProjects();
+            } else {
+                console.error(error);
+                toast.error('Failed to creat project!')
+            }
+
         } else {
-            toast.error('Failed creating a project!')
+            toast.error('Failed to creat project!')
+            console.error(error);
         }
     } catch (error) {
         console.error(error);
         toast.error('Failed creating a project!')
     }
 };
+
+/**
+ * DELETE PROJECT
+ */
+// Delete variables
+const showDeleteModal = ref(false);
+const projectIdToDelete = ref(null);
+const warningMessage = ref('');
+
+const openDeleteModal = (projectId) => {
+    projectIdToDelete.value = projectId;
+    warningMessage.value = "Are you want to delete this project ?"
+    showDeleteModal.value = true;
+};
+
+const confirmDelete = async () => {
+    try {
+        const res = await store.dispatch('projects/deleteProject', projectIdToDelete.value);
+        if (res.status === 204) {
+            toast.success('Project deleted successful');
+            fetchProjects();
+        }
+        showDeleteModal.value = false;
+    } catch (error) {
+        toast.error("Failed to delete project");
+        console.error('Failed to delete project:', error);
+    }
+};
+
+
+
 
 // Fetch data on component mount
 onMounted(() => {

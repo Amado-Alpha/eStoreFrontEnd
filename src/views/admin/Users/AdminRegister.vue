@@ -31,12 +31,15 @@
     </div>
 </template>
 
+
 <script setup>
 
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
+import { useToast } from 'vue-toastification';
 
+const toast = useToast();
 const store = useStore();
 const router = useRouter();
 
@@ -45,6 +48,7 @@ const email = ref('');
 const password = ref('');
 const password_confirmation = ref('');
 
+const fetchUsers = () => store.dispatch('users/fetchUsers');
 
 const registerUser = async () => {
     try {
@@ -54,12 +58,20 @@ const registerUser = async () => {
             password: password.value,
             password_confirmation: password_confirmation.value,
         };
-        await store.dispatch('users/register', user);
-        alert('User registered successfully!');
-        router.push({ name: 'admin.users' });
+
+        const response = await store.dispatch('users/register', user);
+        if (response === 201) {
+            toast.success('User registered successfully!');
+            fetchUsers();
+            router.push({ name: 'admin.users' });
+        } else {
+            console.error(error);
+            toast.error('Registration failed');
+        }
+
     } catch (error) {
         console.error(error);
-        alert('Registration failed');
+        toast.error('Registration failed');
     }
 };
 

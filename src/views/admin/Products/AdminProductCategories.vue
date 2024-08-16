@@ -119,7 +119,7 @@ const fetchCategories = () => store.dispatch('categories/fetchCategories');
  * TABLE LOGIC 
  */
 const currentPage = ref(1);
-const itemsPerPage = ref(3);
+const itemsPerPage = ref(12);
 const tableTopPosition = ref(null);
 
 const paginatedProducts = computed(() => {
@@ -207,9 +207,21 @@ const saveCategory = async () => {
         //Resetting form
         categoryName.value = '';
 
-        await store.dispatch('categories/addCategory', category);
-        toast.success('Category created successfully!');
-        fetchCategories();
+        const isCategoryUnique = await store.dispatch('categories/checkUniqueness', category.name);
+
+        if (isCategoryUnique) {
+            // Add the feature only if it's unique
+            const response = await store.dispatch('categories/addCategory', category);
+
+            if (response.status === 201) {
+                toast.success('Category created successfully!');
+                fetchCategories();
+            } else {
+                toast.error('Failed to create feature!');
+            }
+        } else {
+            toast.error('Category already exists!');
+        }
     } catch (error) {
         console.error(error);
         toast.error('failed to create to category!');

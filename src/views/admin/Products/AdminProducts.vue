@@ -23,14 +23,14 @@
                         </tr>
                         <tr v-for="product in paginatedProducts" :key="product.id"
                             class="hover:bg-gray-100 odd:bg-gray-100 even:bg-green-100">
-                            <td class="py-3 px-4 border-b">{{ product.name }}</td>
-                            <td class="py-3 px-4 border-b">{{ product.category.name }}</td>
+                            <td class="py-3 px-4 border-b">{{ product?.name }}</td>
+                            <td class="py-3 px-4 border-b">{{ product?.category?.name }}</td>
                             <td class="py-3 px-4 border-b">
                                 <div class="relative group">
                                     <span class="truncate max-w-xs block">
-                                        {{ product.description.length > 30
-                                            ? product.description.slice(0, 30) + '...'
-                                            : product.description
+                                        {{ product?.description?.length > 30
+                                            ? product?.description?.slice(0, 30) + '...'
+                                            : product?.description
                                         }}
                                     </span>
                                     <div
@@ -174,7 +174,6 @@ const projects = computed(() => store.state.projects.projects);
 const uploading = computed(() => store.state.products.uploading);
 
 
-console.log('My projects from products:', projects.value);
 
 // Store dispatches
 const fetchProducts = () => store.dispatch('products/fetchProducts');
@@ -188,7 +187,7 @@ const fetchCategories = () => store.dispatch('categories/fetchCategories');
  * TABLE LOGIC 
  */
 const currentPage = ref(1);
-const itemsPerPage = ref(3);
+const itemsPerPage = ref(12);
 const tableTopPosition = ref(null);
 
 const paginatedProducts = computed(() => {
@@ -229,35 +228,6 @@ const scrollToPosition = function () {
 };
 
 /**
- * DELETE PROJECT
- */
-const productIdToDelete = ref(null);
-const showDeleteModal = ref(false);
-const warningMessage = ref('');
-
-const openDeleteModal = (productId) => {
-    productIdToDelete.value = productId;
-    showDeleteModal.value = true;
-    warningMessage.value = "Are you sure you want to delete this product?"
-};
-
-const confirmDelete = async () => {
-    try {
-        const res = await store.dispatch('products/deleteProduct', productIdToDelete.value);
-        if (res.status === 204) {
-            toast.success('Product deleted successfully!');
-            fetchProducts();
-        }
-        showDeleteModal.value = false;
-    } catch (error) {
-        console.error('Failed to delete product:', error);
-        toast.error('Failed to delete product');
-        showDeleteModal.value = false;
-    }
-};
-
-
-/**
  * PRODUCT FORM LOGIC
  */
 const onFileChange = (e) => {
@@ -291,18 +261,53 @@ const saveProduct = async () => {
                 imageUploadInput.value.value = '';
             }
 
-            //Adding product to the state
-            await store.dispatch('products/addProduct', product);
-            toast.success('Product created successfully!');
 
-            //Immidiately updating the state after saving.
-            fetchProducts();
+            const response = await store.dispatch('products/addProduct', product);
+            if (response.status === 201) {
+                toast.success('Product created successfully!');
+                //Immidiately updating the state after saving.
+                fetchProducts();
+            } else {
+                toast.error('failed to create to product!');
+            }
+
         }
     } catch (error) {
         console.error(error);
         toast.error('failed to create to product!');
     }
 };
+
+
+
+/**
+ * DELETE PROJECT
+ */
+const productIdToDelete = ref(null);
+const showDeleteModal = ref(false);
+const warningMessage = ref('');
+
+const openDeleteModal = (productId) => {
+    productIdToDelete.value = productId;
+    showDeleteModal.value = true;
+    warningMessage.value = "Are you sure you want to delete this product?"
+};
+
+const confirmDelete = async () => {
+    try {
+        const res = await store.dispatch('products/deleteProduct', productIdToDelete.value);
+        if (res.status === 204) {
+            toast.success('Product deleted successfully!');
+            fetchProducts();
+        }
+        showDeleteModal.value = false;
+    } catch (error) {
+        console.error('Failed to delete product:', error);
+        toast.error('Failed to delete product');
+        showDeleteModal.value = false;
+    }
+};
+
 
 
 onMounted(() => {

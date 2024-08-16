@@ -98,15 +98,13 @@ const actions = {
   // Adding new project to server and commiting it to state
   async addProject({ commit }, project) {
     try {
-      // Data validation here before posting
-
-      // End Data validation
       const res = await axiosClient.post('/projects', project);
       commit('SET_NEW_PROJECT', project);
       const {
         data: { data },
+        status,
       } = res;
-      return data;
+      return { data, status };
     } catch (error) {
       commit('SET_SERVER_ERROR', 'Failed to add project details to server.');
       console.error(error);
@@ -133,15 +131,15 @@ const actions = {
 
   // Updating a project to server and commiting it to state
   async updateProject({ commit }, { id, project }) {
-    // console.log('PROJECT B4 TRY:', project);
     try {
       const res = await axiosClient.put(`/projects/${id}`, project);
       commit('UPDATE_PROJECT', project);
       const {
         data: { data },
+        status,
       } = res;
 
-      return data;
+      return { data, status };
     } catch (error) {
       commit('SET_UPLOAD_ERROR', 'Failed to add project details to server.');
       console.error(error);

@@ -1,6 +1,6 @@
 <template>
-    <div class="bg-green-100">
-        <section class="container mx-auto lg:px-12 px-4 bg-gray dark:bg-gray-900 py-12  bg-green-100">
+    <div class="bg-green-100 pt-16">
+        <section class="container mx-auto lg:px-12 px-4 bg-gray dark:bg-gray-900 py-12 bg-green-100">
             <div class="max-w-7xl mx-auto px-6 lg:px-8">
                 <div class="font-roboto text-center mb-12">
                     <h2 class="text-3xl font-extrabold text-gray-700 dark:text-white sm:text-5xl">
@@ -14,7 +14,7 @@
                     <div v-for="service in services" :key="service.id"
                         class="service-item font-roboto bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden hover:scale-105 transform transition duration-300 p-6 text-center">
                         <div class="flex items-center justify-center h-16 w-16 mx-auto mb-4">
-                            <i :class="service.icon" class="text-green-500 text-4xl"></i>
+                            <i :class="service.icon" class="text-green-400 text-4xl"></i>
                         </div>
                         <h3 class="text-2xl font-semibold text-gray-700 dark:text-white">
                             {{ service.title }}

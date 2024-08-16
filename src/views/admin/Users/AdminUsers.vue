@@ -89,7 +89,7 @@ const users = computed(() => store.state.users.users);
 const fetchUsers = () => store.dispatch('users/fetchUsers');
 
 const currentPage = ref(1);
-const itemsPerPage = ref(5);
+const itemsPerPage = ref(12);
 const tableTopPosition = ref(null);
 
 /**
@@ -133,7 +133,6 @@ const scrollToPosition = () => {
     }
 };
 
-
 /**
  * DELETE USER
  */
@@ -147,10 +146,13 @@ const openDeleteModal = (userId) => {
 
 const confirmDelete = async () => {
     try {
-        await store.dispatch('users/deleteUser', userIdToDelete.value);
+        const response = await store.dispatch('users/deleteUser', userIdToDelete.value);
+        if (response.status === 204) {
+            toast.success('User deleted successfully.');
+            fetchUsers();
+        }
         showDeleteModal.value = false;
-        toast.success('User deleted successfully.');
-        fetchUsers();
+
     } catch (error) {
         showDeleteModal.value = false;
         toast.error('Failed to delete user');

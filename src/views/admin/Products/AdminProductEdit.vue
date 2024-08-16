@@ -112,6 +112,18 @@ const onFileChange = (e) => {
     image.value = files[0];
 };
 
+const confirmUpdateStatus = function (status) {
+    console.log('STATUS', status);
+    if (status === 200) {
+        uploadSuccess.value = true;
+        toast.success('Product updated succesfully');
+        router.push({ name: 'admin.products' });
+    } else {
+        uploadError.value = 'An error occurred while updating the product.';
+        toast.error('Product updating failed!');
+    }
+}
+
 const updateProduct = async () => {
     uploading.value = true;
     try {
@@ -125,10 +137,8 @@ const updateProduct = async () => {
                 categoryId: productCategory.value
             };
 
-            await store.dispatch('products/updateProduct', { id: productId, product });
-            toast.success('Product updated successfully!');
-            uploadSuccess.value = true;
-            router.push({ name: 'admin.products' });
+            const response = await store.dispatch('products/updateProduct', { id: productId, product });
+            confirmUpdateStatus(response.status);
         }
         // A user might not need to update an image
         else {
@@ -138,10 +148,8 @@ const updateProduct = async () => {
                 price: productPrice.value,
                 categoryId: productCategory.value
             };
-            await store.dispatch('products/updateProduct', { id: productId, product });
-            toast.success('Product updated successfully!');
-            router.push({ name: 'admin.products' });
-            uploadSuccess.value = true;
+            const response = await store.dispatch('products/updateProduct', { id: productId, product });
+            confirmUpdateStatus(response.status);
         }
     } catch (error) {
         toast.error('Failed to update product!');

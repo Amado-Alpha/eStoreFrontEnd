@@ -50,10 +50,10 @@ const props = defineProps({
 const featureId = props.id;
 
 // Store dispatches
-const fetchCategory = async () => {
+const fetchFeature = async () => {
     const feature = await store.dispatch('features/getFeature', featureId);
     // Pre-populating the form fields with data.
-    featureDescription.value = feature.name;
+    featureDescription.value = feature.description;
 
 };
 
@@ -64,23 +64,26 @@ const updateFeature = async () => {
     uploading.value = true;
     try {
         const feature = {
-            name: featureDescription.value,
+            description: featureDescription.value,
         };
 
-        await store.dispatch('features/updateFeature', { id: featureId, feature });
-        toast.success('Project updated successfully!');
-        uploadSuccess.value = true;
-        router.push({ name: 'admin.features' });
+        const response = await store.dispatch('features/updateFeature', { id: featureId, feature });
+        if (response.status === 200) {
+            toast.success('Project updated successfully!');
+            router.push({ name: 'admin.features' });
+        } else {
+            toast.error('Failed to update feature!')
+        }
 
     } catch (error) {
         toast.error('Failed to update feature!');
-        uploadError.value = 'An error occurred while updating the feature.';
+        console.error(error);
     } finally {
         uploading.value = false;
     }
 }
 
 onMounted(() => {
-    fetchCategory();
+    fetchFeature();
 });
 </script>

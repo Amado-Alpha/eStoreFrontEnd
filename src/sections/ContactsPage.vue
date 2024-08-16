@@ -9,17 +9,17 @@
                     <div class="space-y-4">
                         <!-- Street -->
                         <div class="flex items-center">
-                            <i class="fas fa-map-marker-alt text-green-600 text-3xl mr-3"></i>
+                            <i class="fas fa-map-marker-alt text-green-500 text-3xl mr-3"></i>
                             <p class="text-gray-500">Magomeni Mapipa</p>
                         </div>
                         <!-- City -->
                         <div class="flex items-center">
-                            <i class="fas fa-building text-green-600 text-3xl mr-3"></i>
+                            <i class="fas fa-building text-green-500 text-3xl mr-3"></i>
                             <p class="text-gray-500">Dar Es Salaam</p>
                         </div>
                         <!-- Country -->
                         <div class="flex items-center">
-                            <i class="fas fa-flag text-green-600 text-3xl mr-3"></i>
+                            <i class="fas fa-flag text-green-500 text-3xl mr-3"></i>
                             <p class="text-gray-500">Tanzania</p>
                         </div>
                     </div>
@@ -27,15 +27,15 @@
                 <div class="bg-white shadow-md rounded-lg p-8">
                     <h2 class="text-2xl font-semibold text-gray-800 mb-4">Contact Information</h2>
                     <div class="flex items-center mb-4">
-                        <i class="fas fa-envelope text-green-600 text-2xl mr-3"></i>
+                        <i class="fas fa-envelope text-green-500 text-2xl mr-3"></i>
                         <a href="mailto:contact@company.com" class="text-gray-700">contact@company.com</a>
                     </div>
                     <div class="flex items-center mb-4">
-                        <i class="fas fa-phone-alt text-green-600 text-2xl mr-3"></i>
+                        <i class="fas fa-phone-alt text-green-500 text-2xl mr-3"></i>
                         <a href="tel:+1234567890" class="text-gray-700">+1234567890</a>
                     </div>
                     <div class="flex items-center mb-4">
-                        <i class="fas fa-clock text-green-600 text-2xl mr-3"></i>
+                        <i class="fas fa-clock text-green-500 text-2xl mr-3"></i>
                         <p class="text-gray-700">Mon-Fri: 9am - 6pm</p>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                         <h2 class="text-3xl font-semibold text-gray-700 dark:text-white sm:text-5xl">
                             GET IN TOUCH
                         </h2>
-                        <p class="mt-4 text-lg leading-7 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                        <p class="mt-4 text-lg leading-7 text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
                             Send us a message via WhatsApp and we'll get back to you asap!
                         </p>
                     </div>

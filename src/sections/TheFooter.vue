@@ -1,5 +1,5 @@
 <template>
-  <footer class="relative bg-gradient-to-t from-green-200 to-white font-roboto text-black py-12">
+  <footer class="relative bg-gradient-to-t from-green-100 to-white font-roboto text-black py-12">
     <div class="container mx-auto px-4 lg:px-8">
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
         <!-- About Section -->

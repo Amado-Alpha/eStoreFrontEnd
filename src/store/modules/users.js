@@ -3,7 +3,7 @@ import apiClient from '../../services/authService';
 
 // Mutation types
 export const SET_USERS = 'SET_USERS';
-export const SET_NEW_USER = 'SET_NEW_FEATURE';
+export const SET_NEW_USER = 'SET_NEW_USER';
 export const SET_LOADING = 'SET_LOADING';
 export const SET_ERROR = 'SET_ERROR';
 export const SET_SERVER_ERROR = 'SET_SERVER_ERROR';
@@ -64,7 +64,6 @@ const actions = {
 
   // Retrieving a user
   async getUser({ commit }, userId) {
-    console.log('User ID:', userId);
     try {
       const response = await apiClient.get(`/users/${userId}`);
       const {
@@ -73,7 +72,7 @@ const actions = {
       return data;
     } catch (error) {
       commit('SET_SERVER_ERROR', 'Failed to retrieve user from server.');
-      console.log(error);
+      console.error(error);
       throw error;
     }
   },
@@ -81,14 +80,13 @@ const actions = {
   // Updating a user to server and commiting it to state
   async updateUser({ commit }, { id, user }) {
     try {
-      console.log('USER:', user);
       const res = await apiClient.put(`/users/${id}`, user);
-      console.log('RESPONSE:', res);
-      commit('SET_USER', user);
+      commit('UPDATE_USER', user);
       const {
         data: { data },
+        status,
       } = res;
-      return data;
+      return { data, status };
     } catch (error) {
       commit('SET_SERVER_ERROR', 'Failed to add user details to server.');
       console.error(error);
@@ -100,14 +98,10 @@ const actions = {
     commit(SET_LOADING, true);
     try {
       const response = await apiClient.get('/users');
-      console.log('Fetching users...');
-      // console.log(response.data.data);
-      //Destructuring
-      console.log(response);
 
       const { data } = response;
 
-      console.log(data);
+      // console.log(data);
 
       commit(SET_USERS, data);
     } catch (error) {
@@ -137,12 +131,12 @@ const actions = {
   async register({ commit }, user) {
     try {
       const res = await apiClient.post('/register', user);
-      console.log('User data after registration', res);
-      const { token, user: registeredUser } = res.data;
-      localStorage.setItem('auth_token', token);
-      commit('SET_AUTH_TOKEN', token);
-      commit('SET_AUTH_USER', registeredUser);
-      return registeredUser;
+      // const { token, user: registeredUser, status } = res.data;
+
+      const { status } = res;
+
+      console.log('Registered user:', status);
+      return status;
     } catch (error) {
       commit('SET_ERROR', 'Failed to register.');
       console.error(error);
@@ -164,7 +158,8 @@ const actions = {
 
   async deleteUser({ commit }, id) {
     try {
-      await apiClient.delete(`/users/${id}`);
+      const res = await apiClient.delete(`/users/${id}`);
+      return res;
     } catch (error) {
       commit('SET_SERVER_ERROR', 'Failed to delete user from server.');
       console.log(error);

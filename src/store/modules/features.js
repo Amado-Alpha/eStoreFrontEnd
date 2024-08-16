@@ -15,7 +15,7 @@ export const SET_FEATURES = 'SET_FEATURES';
 export const SET_NEW_FEATURE = 'SET_NEW_FEATURE';
 export const SET_LOADING = 'SET_LOADING';
 export const SET_ERROR = 'SET_ERROR';
-export const DELETE_FEATURE = 'SET_ERROR';
+export const DELETE_FEATURE = 'DELETE_FEATURE';
 export const UPDATE_FEATURE = 'UPDATE_FEATURE';
 
 const state = {
@@ -72,15 +72,29 @@ const actions = {
     }
   },
 
+  // Checking feature description uniqueness
+  async checkUniqueness({ commit }, featureDescription) {
+    try {
+      const response = await axiosClient.get(
+        `/features/check-unique/${encodeURIComponent(featureDescription)}`
+      );
+      return !response.data.exists;
+    } catch (error) {
+      console.error('Error checking uniqueness:', error);
+    }
+  },
+
   // Adding new feature to server and commiting it to state
-  async addfeature({ commit }, feature) {
+  async addFeature({ commit }, feature) {
     try {
       const res = await axiosClient.post('/features', feature);
+      console.log('WHOLE BLOCK', res);
       commit('SET_NEW_FEATURE', feature);
       const {
         data: { data },
+        status,
       } = res;
-      return data;
+      return { data, status };
     } catch (error) {
       commit('SET_ERROR', 'Failed to add feature details to server.');
       console.error(error);
@@ -109,12 +123,12 @@ const actions = {
   async updateFeature({ commit }, { id, feature }) {
     try {
       const res = await axiosClient.put(`/features/${id}`, feature);
-      // console.log('RESPONSE:', res);
       commit('UPDATE_FEATURE', feature);
       const {
         data: { data },
+        status,
       } = res;
-      return data;
+      return { data, status };
     } catch (error) {
       commit('SET_ERROR', 'Failed to add feature details to server.');
       console.error(error);

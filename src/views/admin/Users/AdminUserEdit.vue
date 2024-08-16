@@ -108,9 +108,14 @@ const updateUser = async () => {
             user.password_confirmation = password_confirmation.value;
         }
 
-        await store.dispatch('users/updateUser', { id: userId, user });
-        toast.success('User updated successfully!');
-        router.push('/admin/users');
+        const response = await store.dispatch('users/updateUser', { id: userId, user });
+        if (response.status === 200) {
+            toast.success('User updated successfully!');
+            router.push('/admin/users');
+        } else {
+            toast.error('User update failed');
+        }
+
     } catch (error) {
         console.error(error);
         toast.error('User update failed');

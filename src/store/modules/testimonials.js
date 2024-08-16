@@ -84,8 +84,9 @@ const actions = {
       commit('SET_TESTIMONIAL', testimonial);
       const {
         data: { data },
+        status,
       } = res;
-      return data;
+      return { data, status };
     } catch (error) {
       commit(
         'SET_SERVER_ERROR',
@@ -121,8 +122,9 @@ const actions = {
       commit('SET_TESTIMONIAL', testimonial);
       const {
         data: { data },
+        status,
       } = res;
-      return data;
+      return { data, status };
     } catch (error) {
       commit(
         'SET_UPLOAD_ERROR',
@@ -154,7 +156,6 @@ const actions = {
   async deleteTestimonial({ commit }, id) {
     try {
       const res = await axiosClient.delete(`/testimonials/${id}`);
-      commit('DELETE_TESTIMONIAL', id);
       return res;
     } catch (error) {
       commit('SET_SERVER_ERROR', 'Failed to delete project from server.');

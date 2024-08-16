@@ -80,8 +80,9 @@ const actions = {
       commit('SET_PRODUCT', product);
       const {
         data: { data },
+        status,
       } = res;
-      return data;
+      return { data, status };
     } catch (error) {
       commit('SET_SERVER_ERROR', 'Failed to add product details to server.');
       console.error(error);
@@ -113,8 +114,9 @@ const actions = {
       commit('SET_PRODUCT', product);
       const {
         data: { data },
+        status,
       } = res;
-      return data;
+      return { data, status };
     } catch (error) {
       commit('SET_UPLOAD_ERROR', 'Failed to add product details to server.');
       console.error(error);

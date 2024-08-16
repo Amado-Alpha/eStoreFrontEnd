@@ -100,7 +100,7 @@ import AdminFooter from '../components/AdminFooter.vue';
 
 const store = useStore();
 const toast = useToast();
-const featureDesription = ref('');
+const featureDescription = ref('');
 
 // Computed properties
 const features = computed(() => store.state.features.features);
@@ -114,7 +114,7 @@ const fetchFeatures = () => store.dispatch('features/fetchFeatures');
  * TABLE LOGIC 
  */
 const currentPage = ref(1);
-const itemsPerPage = ref(3);
+const itemsPerPage = ref(12);
 const tableTopPosition = ref(null);
 
 const paginatedFeatures = computed(() => {
@@ -155,6 +155,44 @@ const scrollToPosition = function () {
 };
 
 /**
+ * FEATURE FORM LOGIC
+ */
+
+const saveFeature = async () => {
+
+    try {
+        const feature = {
+            description: featureDescription.value,
+        };
+        //Resetting form
+        featureDescription.value = '';
+
+        const isFeatureUnique = await store.dispatch('features/checkUniqueness', feature.description);
+
+        if (isFeatureUnique) {
+            // Add the feature only if it's unique
+            const response = await store.dispatch('features/addFeature', feature);
+            console.log('Response from component:', response.status);
+
+            if (response.status === 201) {
+                toast.success('Feature created successfully!');
+                fetchFeatures(); // Fetch the updated features
+            } else {
+                toast.error('Failed to create feature!');
+            }
+        } else {
+            toast.error('Feature description already exists!');
+        }
+
+    } catch (error) {
+        console.error(error);
+        toast.error('failed to create to feature!');
+    }
+};
+
+
+
+/**
  * DELETE FEATURE
  */
 const featureIdToDelete = ref(null);
@@ -181,30 +219,6 @@ const confirmDelete = async () => {
     } catch (error) {
         console.error('Failed to delete feature:', error);
         toast.error('Failed to delete feature');
-    }
-};
-
-
-/**
- * FEATURE FORM LOGIC
- */
-
-const saveFeature = async () => {
-
-    try {
-        const feature = {
-            description: featureDesription.value,
-        };
-        //Resetting form
-        featureDesription.value = '';
-
-        await store.dispatch('features/addFeature', feature);
-        toast.success('Feature created successfully!');
-        fetchFeatures();
-
-    } catch (error) {
-        console.error(error);
-        toast.error('failed to create to feature!');
     }
 };
 

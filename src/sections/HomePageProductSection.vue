@@ -11,8 +11,7 @@
         <swiper :slidesPerView="1" :spaceBetween="20" :loop="true" :navigation="false"
             :autoplay="{ delay: 3000, disableOnInteraction: false }" :breakpoints="breakpoints" :modules="modules"
             class="mySwiper">
-            <swiper-slide v-for="(product, index) in products" :key="index"
-                class="product-slide p-8 bg-gray-100 rounded-lg">
+            <swiper-slide v-for="(product, index) in products" :key="index" class="product-slide p-8 rounded-lg">
                 <img :src="product.image" alt="Product Image" class="w-full h-64 object-fill mb-4 rounded-lg"
                     loading="lazy" />
                 <div class="product-text-container h-24 overflow-hidden text-ellipsis whitespace-normal">

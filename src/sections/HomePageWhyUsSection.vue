@@ -13,7 +13,7 @@
         <div v-for="(item, index) in items" :key="index"
           class="section-item bg-white rounded-lg p-6 shadow-md transform transition duration-300 hover:scale-105 hover:shadow-xl">
           <div class="flex justify-center mb-4">
-            <i :class="item.iconClass" class="text-green-500 text-4xl"></i>
+            <i :class="item.iconClass" class="text-green-400 text-4xl"></i>
           </div>
           <h3 class="text-xl font-semibold text-gray-800 mb-2">{{ item.title }}</h3>
           <p class="text-gray-600">{{ item.description }}</p>

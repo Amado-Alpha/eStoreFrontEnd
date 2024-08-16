@@ -68,9 +68,14 @@ const updateCategory = async () => {
             name: categoryName.value,
         };
 
-        await store.dispatch('categories/updateCategory', { id: categoryId, category });
-        toast.success('Category updated successfully!');
-        router.push({ name: 'admin.categories' });
+        const response = await store.dispatch('categories/updateCategory', { id: categoryId, category });
+        if (response.status === 200) {
+            toast.success('Category updated successfully!');
+            router.push({ name: 'admin.categories' });
+        } else {
+            toast.error('Failed to update category!');
+        }
+
 
     } catch (error) {
         toast.error('Failed to update category!');

@@ -24,37 +24,37 @@
                         </tr>
                         <tr v-for="testimonial in paginatedTestimonials" :key="testimonial.id"
                             class="hover:bg-gray-100 odd:bg-gray-100 even:bg-green-100">
-                            <td class="py-3 px-4 border-b">{{ testimonial.authorFirstname + ' ' +
-                                testimonial.authorSurname
+                            <td class="py-3 px-4 border-b">{{ testimonial?.authorFirstname + ' ' +
+                                testimonial?.authorSurname
                                 }}
                             </td>
                             <td class="py-3 px-4 border-b relative group">
-                                <img :src="testimonial.imageUrl" alt="testimonial image"
+                                <img :src="testimonial?.imageUrl" alt="testimonial image"
                                     class="h-16 w-16 object-cover" />
                                 <div
                                     class="absolute top-0 left-0 hidden group-hover:block bg-white border border-gray-300 p-1 z-10">
-                                    <img :src="testimonial.imageUrl" alt="testimonial image"
+                                    <img :src="testimonial?.imageUrl" alt="testimonial image"
                                         class="h-auto w-auto object-cover" />
                                 </div>
                             </td>
-                            <td class="py-3 px-4 border-b">{{ testimonial.company }}</td>
-                            <td class="py-3 px-4 border-b">{{ testimonial.position }}</td>
+                            <td class="py-3 px-4 border-b">{{ testimonial?.company }}</td>
+                            <td class="py-3 px-4 border-b">{{ testimonial?.position }}</td>
                             <td class="py-3 px-4 border-b">
                                 <div class="relative group">
                                     <span class="truncate max-w-xs block">
-                                        {{ testimonial.content.length > 30
-                                            ? testimonial.content?.slice(0, 30) + '...'
-                                            : testimonial.content
+                                        {{ testimonial?.content?.length > 30
+                                            ? testimonial?.content?.slice(0, 30) + '...'
+                                            : testimonial?.content
                                         }}
                                     </span>
                                     <div
                                         class="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-sm p-2 rounded-lg shadow-lg w-64 max-h-32 overflow-y-auto">
-                                        {{ testimonial.content }}
+                                        {{ testimonial?.content }}
                                     </div>
                                 </div>
                             </td>
 
-                            <td class="py-3 px-4 border-b">{{ testimonial.rating }}</td>
+                            <td class="py-3 px-4 border-b">{{ testimonial?.rating }}</td>
                             <td class="py-3 px-4 border-b">
                                 <router-link :to="{ name: 'admin.edit-testimonial', params: { id: testimonial.id } }"
                                     class="bg-blue-600 text-white py-1 px-2 rounded-md mr-2 shadow-md hover:bg-blue-700">
@@ -183,8 +183,6 @@ const imageUploadInput = ref(null);
 // Computed properties
 const testimonials = computed(() => store.state.testimonials.testimonials);
 const uploading = computed(() => store.state.testimonials.uploading);
-const uploadError = computed(() => store.state.testimonials.uploadError);
-const uploadSuccess = computed(() => store.state.testimonials.uploadSuccess);
 
 // Store dispatches
 const fetchTestimonials = () => store.dispatch('testimonials/fetchTestimonials');
@@ -194,7 +192,7 @@ const fetchTestimonials = () => store.dispatch('testimonials/fetchTestimonials')
  * TABLE LOGIC 
  */
 const currentPage = ref(1);
-const itemsPerPage = ref(3);
+const itemsPerPage = ref(12);
 const tableTopPosition = ref(null);
 
 // Pagination
@@ -236,31 +234,6 @@ const scrollToPosition = function () {
 };
 
 /**
- * DELETE TESTIMONIAL
- */
-const testimonialIdToDelete = ref(null);
-const showDeleteModal = ref(false);
-const warningMessage = ref('');
-
-const openDeleteModal = (testimonialId) => {
-    testimonialIdToDelete.value = testimonialId;
-    warningMessage.value = "Are you sure you want to delete this testimonial ?"
-    showDeleteModal.value = true;
-};
-
-const confirmDelete = async () => {
-    try {
-        await store.dispatch('testimonials/deleteProduct', testimonialIdToDelete.value);
-        showDeleteModal.value = false;
-        toast.success('Deleted successfully!')
-    } catch (error) {
-        console.error('Failed to delete testimonial:', error);
-        toast.error('Failed to delete!');
-    }
-};
-
-
-/**
  * TESTIMONIAL FORM LOGIC
  */
 const onFileChange = (e) => {
@@ -298,15 +271,48 @@ const saveTestimonial = async () => {
                 imageUploadInput.value.value = '';
             }
 
-            await store.dispatch('testimonials/addTestimonial', testimonial);
-            toast.success('Testimonial created successfully!');
-            fetchTestimonials();
+            const response = await store.dispatch('testimonials/addTestimonial', testimonial);
+            if (response.status === 201) {
+                toast.success('Testimonial created successfully!');
+                fetchTestimonials();
+            } else {
+                console.error(error);
+                toast.error('Failed to create testimonial');
+            }
         }
     } catch (error) {
         console.error(error);
         toast.error('Failed to create testimonial');
     }
 };
+
+/**
+ * DELETE TESTIMONIAL
+ */
+const testimonialIdToDelete = ref(null);
+const showDeleteModal = ref(false);
+const warningMessage = ref('');
+
+const openDeleteModal = (testimonialId) => {
+    testimonialIdToDelete.value = testimonialId;
+    warningMessage.value = "Are you sure you want to delete this testimonial ?"
+    showDeleteModal.value = true;
+};
+
+const confirmDelete = async () => {
+    try {
+        const response = await store.dispatch('testimonials/deleteProduct', testimonialIdToDelete.value);
+        if (response.status === 204) {
+            toast.success('Deleted successfully!')
+            fetchTestimonials();
+        }
+        showDeleteModal.value = false;
+    } catch (error) {
+        console.error('Failed to delete testimonial:', error);
+        toast.error('Failed to delete!');
+    }
+};
+
 
 onMounted(() => {
     fetchTestimonials();

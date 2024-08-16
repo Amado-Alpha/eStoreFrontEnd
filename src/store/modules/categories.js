@@ -58,6 +58,18 @@ const actions = {
     }
   },
 
+  // Checking feature description uniqueness
+  async checkUniqueness({ commit }, categoryName) {
+    try {
+      const response = await axiosClient.get(
+        `/categories/check-unique/${encodeURIComponent(categoryName)}`
+      );
+      return !response.data.exists;
+    } catch (error) {
+      console.error('Error checking uniqueness:', error);
+    }
+  },
+
   // Adding new category to server and commiting it to state
   async addCategory({ commit }, category) {
     try {
@@ -65,8 +77,9 @@ const actions = {
       commit('SET_NEW_CATEGORY', category);
       const {
         data: { data },
+        status,
       } = res;
-      return data;
+      return { data, status };
     } catch (error) {
       commit('SET_ERROR', 'Failed to add category details to server.');
       console.error(error);
@@ -98,8 +111,9 @@ const actions = {
       commit('UPDATE_CATEGORY', category);
       const {
         data: { data },
+        status,
       } = res;
-      return data;
+      return { data, status };
     } catch (error) {
       commit('SET_ERROR', 'Failed to add category details to server.');
       console.error(error);

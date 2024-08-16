@@ -115,6 +115,16 @@ const onFileChange = (e) => {
     image.value = files[0];
 };
 
+const confirmUpdateStatus = function (status) {
+
+    if (status === 200) {
+        toast.success('Testimonial updated succesfully');
+        router.push({ name: 'admin.testimonials' });
+    } else {
+        toast.error('Failed to update testimonial!');
+    }
+}
+
 const updateTestimonial = async () => {
     uploading.value = true;
     try {
@@ -131,10 +141,9 @@ const updateTestimonial = async () => {
                 imageUrl: imageUrlFromCloudinary,
             };
 
-            await store.dispatch('testimonials/updateTestimonial', { id: testimonialId, testimonial });
-            toast.success('Testimonial updated successfully!')
-            uploadSuccess.value = true;
-            router.push({ name: 'admin.testimonials' });
+            const response = await store.dispatch('testimonials/updateTestimonial', { id: testimonialId, testimonial });
+            confirmUpdateStatus(response.status);
+
         }
         // A user might not need to update an image
         else {
@@ -147,10 +156,8 @@ const updateTestimonial = async () => {
                 rating: rating.value,
             };
 
-            await store.dispatch('testimonials/updateTestimonial', { id: testimonialId, testimonial });
-            uploadSuccess.value = true;
-            toast.success('Testimonial updated successfully!');
-            router.push({ name: 'admin.testimonials' });
+            const response = await store.dispatch('testimonials/updateTestimonial', { id: testimonialId, testimonial });
+            confirmUpdateStatus(response.status);
         }
     } catch (error) {
         uploadError.value = 'An error occurred while updating the testimonial.';

@@ -1,7 +1,7 @@
 <template>
   <!-- Header -->
   <nav
-    class="mb-24 bg-white dark:bg-gray-900 fixed w-full z-40 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
+    class="font-roboto mb-24 bg-white dark:bg-gray-900 fixed w-full z-40 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
       <router-link to="/" class="flex items-center space-x-3 rtl:space-x-reverse relative">
         <img :src="logo" class="mt-4 h-8 relative z-10" alt="Logo" />
@@ -22,7 +22,7 @@
           class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
           <li v-for="item in navLinks" :key="item.label" class="relative">
             <router-link @click="closeSidebar" :to="item.href"
-              class="font-roboto block py-4 px-3 text-md font-semibold text-gray-700 dark:text-white hover:text-green-500 rounded-md transition-transform duration-300 ease-in-out transform hover:scale-105">
+              class="block py-4 px-3 text-lg font-semibold text-gray-700 dark:text-white hover:text-green-500 rounded-md transition-transform duration-300 ease-in-out transform hover:scale-105">
               {{ item.label }}
               <span
                 class="absolute inset-x-0 bottom-0 left-0 h-1 bg-green-500 transition-transform duration-300 transform scale-x-0 group-hover:scale-x-100"></span>
@@ -52,9 +52,9 @@ const closeSidebar = () => {
 };
 
 // Watch for changes in the sidebar state to update the overflow property of the body
-watch(isSidebarOpen, (newValue) => {
-  document.body.style.overflow = newValue ? 'hidden' : 'auto';
-});
+// watch(isSidebarOpen, (newValue) => {
+//   document.body.style.overflow = newValue ? 'hidden' : 'auto';
+// });
 </script>
 
 <style scoped>

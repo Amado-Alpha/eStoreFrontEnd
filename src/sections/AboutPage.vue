@@ -1,5 +1,5 @@
 <template>
-    <HeroAboutUs header="About Us" />
+    <HeroAboutUs class="mt-18" />
     <section class="font-roboto py-12">
         <div class="container mx-auto lg:px-12 px-4">
             <!-- Company Overview -->

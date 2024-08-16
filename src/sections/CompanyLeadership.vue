@@ -13,8 +13,7 @@
             <swiper :slidesPerView="1" :spaceBetween="20" :loop="true" :pagination="{ clickable: true }"
                 :navigation="false" :autoplay="{ delay: 5000, disableOnInteraction: false }" :breakpoints="breakpoints"
                 :modules="modules" class="mySwiper">
-                <swiper-slide v-for="(teamMember, index) in teamMembers" :key="index"
-                    class="team-slide p-8 bg-gray-100 rounded-lg">
+                <swiper-slide v-for="(teamMember, index) in teamMembers" :key="index" class="team-slide p-8 rounded-lg">
                     <img :src="teamMember.image" alt="Team Member Image" class="w-32 h-32 rounded-full mx-auto mb-4"
                         loading="lazy" />
                     <div class="text-center">

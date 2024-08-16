@@ -33,6 +33,7 @@ FINITO!!!
 1. Check if the rule is enforced (Deleting a category should delete all the products in it).
    Add an additional warning " DELETING THIS CATEGORY MEANS THAT YOU'RE DELETING ALL THE PRODUCTS
    ASSOCIATED WITH THIS CATEGORY";
+2. Ensure that all features, categories, products are unique.
 
 
 

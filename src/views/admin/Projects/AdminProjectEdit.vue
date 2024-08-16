@@ -75,10 +75,8 @@ const projectTitle = ref('');
 const projectDescription = ref('');
 const selectedFeatures = ref([]);
 const image = ref(null);
-
 const uploading = ref(false);
-const uploadError = ref(null);
-const uploadSuccess = ref(false);
+
 
 const features = computed(() => store.state.features.features);
 
@@ -170,6 +168,32 @@ const onFileChange = (event) => {
     image.value = event.target.files[0];
 };
 
+// const confirmDeletion = function (status) {
+//     try {
+//         if (status === 204) {
+//             uploadSuccess.value = true;
+//             toast.success('Project updated succesfully');
+//             router.push({ name: 'admin.projects' });
+//         } else {
+//             throw new Error('Unexpected status code');
+//         }
+//     } catch (error) {
+//         uploadError.value = 'An error occurred while updating the project.';
+//         toast.error('Project updating failed!');
+//         console.error(error);
+//     }
+// }
+
+const confirmUpdateStatus = function (status) {
+
+    if (status === 200) {
+        toast.success('Project updated succesfully');
+        router.push({ name: 'admin.projects' });
+    } else {
+        toast.error('Project updating failed!');
+    }
+}
+
 const updateProject = async () => {
     uploading.value = true;
     try {
@@ -184,10 +208,8 @@ const updateProject = async () => {
             };
 
             // console.log('Edit project PAYLOAD:', project);
-            await store.dispatch('projects/updateProject', { id: projectId, project });
-            uploadSuccess.value = true;
-            toast.success('Project updated successfully');
-            router.push({ name: 'admin.projects' });
+            const response = await store.dispatch('projects/updateProject', { id: projectId, project });
+            confirmUpdateStatus(response.status);
         }
         // A user might not need to update an image
         else {
@@ -199,13 +221,10 @@ const updateProject = async () => {
             };
 
             // console.log('Project to be added:', project);
-            await store.dispatch('projects/updateProject', { id: projectId, project });
-            uploadSuccess.value = true;
-            toast.success('Project updated succesfully');
-            router.push({ name: 'admin.projects' });
+            const response = await store.dispatch('projects/updateProject', { id: projectId, project });
+            confirmUpdateStatus(response.status);
         }
     } catch (error) {
-        uploadError.value = 'An error occurred while updating the project.';
         toast.error('Project updating failed!');
         console.error(error);
     } finally {
