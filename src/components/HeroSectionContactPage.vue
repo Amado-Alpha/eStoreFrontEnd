@@ -23,7 +23,7 @@ import { contact } from '../assets/icons';
 onMounted(() => {
     gsap.from('.hero-section h1', { y: 50, opacity: 0, duration: 1, ease: 'power2.out' });
     gsap.from('.hero-section p', { y: 50, opacity: 0, duration: 1, delay: 0.2, ease: 'power2.out' });
-    gsap.from('.illustration img', { x: -50, opacity: 0, duration: 1, delay: 0.6, ease: 'power2.out' });
+    gsap.from('.illustration img', { x: -50, opacity: 0, duration: 1, delay: 0.4, ease: 'power2.out' });
 });
 </script>
 
