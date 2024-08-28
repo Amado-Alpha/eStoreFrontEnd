@@ -10,7 +10,7 @@
                         Discover the range of services we offer to help you achieve the results you're after.
                     </p>
                 </div>
-                <div class="services-container grid grid-cols-1  sm:grid-cols-2 md:grid-cols-3 gap-10">
+                <div class="services-container grid grid-cols-1  sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-10">
                     <div v-for="service in services" :key="service.id"
                         class="service-item font-roboto bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden hover:scale-105 transform transition duration-300 p-6 text-center">
                         <div class="flex items-center justify-center h-16 w-16 mx-auto mb-4">

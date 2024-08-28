@@ -1,5 +1,5 @@
 <template>
-    <div class="p-6 bg-gray-100 min-h-screen relative overflow-hidden">
+    <div class="p-6 bg-gray-100  relative overflow-hidden">
         <!-- Animated Background -->
         <div class="absolute inset-0 bg-gradient-to-br from-green-200 to-green-400 opacity-50 z-0"></div>
 
@@ -11,7 +11,7 @@
                     <div class="flex items-center justify-between">
                         <div>
                             <div class="text-sm font-medium text-green-600">Total Users</div>
-                            <div class="mt-2 text-3xl font-bold">12,00</div>
+                            <div class="mt-2 text-3xl font-bold">4</div>
                         </div>
                         <div class="text-4xl text-green-600">
                             <i class="fas fa-users"></i>
@@ -24,7 +24,7 @@
                     <div class="flex items-center justify-between">
                         <div>
                             <div class="text-sm font-medium text-green-600">Total Products</div>
-                            <div class="mt-2 text-3xl font-bold">12,00</div>
+                            <div class="mt-2 text-3xl font-bold">12</div>
                         </div>
                         <div class="text-4xl text-green-600">
                             <i class="fas fa-box-open"></i>
@@ -37,7 +37,7 @@
                     <div class="flex items-center justify-between">
                         <div>
                             <div class="text-sm font-medium text-green-600">Total Projects</div>
-                            <div class="mt-2 text-3xl font-bold">12,00</div>
+                            <div class="mt-2 text-3xl font-bold">28</div>
                         </div>
                         <div class="text-4xl text-green-600">
                             <i class="fas fa-project-diagram"></i>
@@ -46,7 +46,7 @@
                 </div>
             </div>
 
-            <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3">
+            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 lg:grid-cols-2">
                 <!-- Recent Activity -->
                 <div class="bg-white rounded-lg shadow-lg p-6">
                     <h2 class="text-lg font-semibold text-gray-800">Recent Activity</h2>
@@ -102,7 +102,7 @@
                     </ul>
                 </div>
                 <!-- Sales/User Trends -->
-                <div class="bg-white rounded-lg shadow-lg p-6 col-span-2">
+                <div class="bg-white rounded-lg shadow-lg p-6">
                     <h2 class="text-lg font-semibold text-gray-800">Sales/User Trends</h2>
                     <div class="mt-4">
                         <div class="relative h-80">
