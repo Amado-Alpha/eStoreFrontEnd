@@ -16,15 +16,13 @@
                 class="mySwiper">
                 <swiper-slide v-for="(project, index) in projects" :key="index"
                     class="project-slide p-4 md:p-8 bg-green-600 rounded-lg grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 shadow-lg transform transition duration-500 hover:scale-105 overflow-hidden">
-                    <!-- <p>button</p> -->
-
                     <!-- Button to Scroll Up -->
                     <button @click="scrollToPreviousSection"
                         class="absolute top-2 left-1/2 transform -translate-x-1/2 bg-white p-2 shadow-lg hover:bg-gray-200 transition-all duration-300 animate-bounce rounded-full">
                         <i class="fas fa-hand-point-up text-green-500 text-2xl"></i>
                     </button>
 
-                    <img :src="project.image" alt="Project Image"
+                    <img :src="project.imageUrl" alt="Project Image"
                         class="w-full h-48 md:h-64 object-cover rounded-lg hover:shadow-2xl transition-shadow duration-300" />
                     <div class="flex flex-col justify-center space-y-2 md:space-y-4">
                         <h3 class="font-roboto text-xl md:text-2xl lg:text-3xl font-bold mb-1 md:mb-2 text-gray-600">
@@ -114,7 +112,8 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination, Autoplay } from 'swiper/modules';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
+import { useStore } from 'vuex';
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -127,7 +126,26 @@ const modules = [Pagination, Autoplay];
 const moveMeDown = ref(null);
 const moveMeUp = ref(null);
 
-const projects = ref(data.projects);
+const store = useStore();
+
+const fetchFeatures = () => store.dispatch('features/fetchFeatures');
+const fetchProjects = () => store.dispatch('projects/fetchProjects');
+
+const projectsFromServer = computed(() => store.state.projects.projects);
+
+watch(projectsFromServer, () => {
+    console.log('Watched projects from server:', projectsFromServer.value);
+});
+
+console.log('projects from server:', projectsFromServer.value);
+
+// Static data 
+const projectStaticData = ref(data.projects);
+
+// Logic to check which data to use (Server or static)
+const projects = computed(() => {
+    return projectsFromServer.value.length > 1 ? projectsFromServer.value : projectStaticData.value;
+})
 
 function scrollToNextSection() {
     if (moveMeDown.value) {
@@ -173,6 +191,9 @@ onMounted(() => {
             once: true,
         },
     });
+
+    fetchFeatures();
+    fetchProjects();
 });
 </script>
 

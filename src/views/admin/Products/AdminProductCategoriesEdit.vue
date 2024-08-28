@@ -1,25 +1,31 @@
 <template>
-    <!-- Category form -->
-    <div class="container mx-auto font-roboto">
-        <div class="md:w-1/2 mx-auto">
-            <form @submit.prevent="updateCategory" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                <h2 class="text-2xl font-bold text-gray-700 mb-6 text-center"> Edit products' category details
-                </h2>
-                <div class="mb-4">
-                    <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Category Name</label>
-                    <input v-model="categoryName" type="text" placeholder="Enter category name" required id="name"
-                        class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+
+    <div class="flex flex-col min-h-screen">
+        <!-- Category form -->
+        <div class="flex-grow">
+            <div class="container mx-auto font-roboto">
+                <div class="md:w-1/2 mx-auto">
+                    <form @submit.prevent="updateCategory" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                        <h2 class="text-2xl font-bold text-gray-700 mb-6 text-center"> Edit products' category details
+                        </h2>
+                        <div class="mb-4">
+                            <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Category Name</label>
+                            <input v-model="categoryName" type="text" placeholder="Enter category name" required
+                                id="name"
+                                class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        </div>
+                        <div class="mb-6 text-center">
+                            <button type="submit"
+                                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                                {{ uploading ? 'Uploading...' : 'Submit' }}
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <div class="mb-6 text-center">
-                    <button type="submit"
-                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                        {{ uploading ? 'Uploading...' : 'Submit' }}
-                    </button>
-                </div>
-            </form>
+            </div>
         </div>
+        <AdminFooter />
     </div>
-    <AdminFooter />
 </template>
 
 <script setup>

@@ -89,8 +89,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import OurTeam from './CompanyLeadership.vue';
-import HeroAboutUs from '../components/HeroAboutUs.vue';
 import HeroSectionContactPage from '../components/HeroSectionContactPage.vue';
 
 const form = ref({

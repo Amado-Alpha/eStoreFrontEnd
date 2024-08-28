@@ -1,4 +1,3 @@
-
 concepts
 1. w-10/12
 2. 
@@ -13,29 +12,12 @@ CHARGES
 
                        FRONT-END
 
-1. Look into transition options for image slider (especially the projects showcase section)
-2. Add formatting to the price column of the products (Amounts should be comma separated eg. 15,000)
-3. Test validation for all forms.
-4. Scroll triggered animations.
-5. Add features and categories to admin panel.
-6. Find a nice opacity to provide a shade for hero section carousel. cap: 1100 for all.
-
-7. Error handling in the adding project part
-   1. A user should be allowed to add a project without features and an error shouldn't be thrown out
-8. Which is the best place to store your error handling logic.
-9. Scroll triggered animations (ref. Tigo Tz official website)
-10. Table pagination buttons should be visible only when the items > itemsPerPage
-11. Making the footer to always stay on the bottom position regardless of the page content.
+2. Table pagination buttons should be visible only when the items > itemsPerPage
+3. Making the footer to always stay on the bottom position regardless of the page content.
 
 FINITO!!!
 
                         BACK-END
-1. Check if the rule is enforced (Deleting a category should delete all the products in it).
-   Add an additional warning " DELETING THIS CATEGORY MEANS THAT YOU'RE DELETING ALL THE PRODUCTS
-   ASSOCIATED WITH THIS CATEGORY";
-2. Ensure that all features, categories, products are unique.
-
-
 
 
 

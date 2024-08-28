@@ -138,7 +138,7 @@ const actions = {
 
       commit('SET_PRODUCTS', data);
     } catch (error) {
-      commit('SET_ERROR', error);
+      commit('SET_SERVER_ERROR', error);
     } finally {
       commit('SET_LOADING', false);
     }

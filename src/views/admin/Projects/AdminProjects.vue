@@ -186,11 +186,16 @@ const projects = computed(() => store.state.projects.projects);
 const features = computed(() => store.state.features.features);
 const uploading = computed(() => store.state.projects.uploading);
 
-console.log('Projects computed:', projects.value)
+const projectsFromServer = computed(() => store.state.projects.projects);
+
+console.log('projects from server:', projectsFromServer.value);
+
+
+console.log('Projects computed:', projects.value);
 
 const fetchProjects = async () => {
     const response = await store.dispatch('projects/fetchProjects');
-    console.log('Projects resp.', response)
+    // console.log('Projects resp.', response);
 };
 
 // const fetchProjects = () => store.dispatch('projects/fetchProjects');
@@ -314,7 +319,7 @@ const saveProject = async () => {
 
     try {
         const imageUrlFromCloudinary = await store.dispatch('projects/uploadImage', image.value);
-        console.log('ImageFromCloudinary:', imageUrlFromCloudinary);
+        // console.log('ImageFromCloudinary:', imageUrlFromCloudinary);
         if (imageUrlFromCloudinary) {
             const project = {
                 title: projectTitle.value,
@@ -338,16 +343,15 @@ const saveProject = async () => {
                 fetchProjects();
             } else {
                 console.error(error);
-                toast.error('Failed to creat project!')
+                toast.error('Failed to creat project!');
             }
 
         } else {
-            toast.error('Failed to creat project!')
-            console.error(error);
+            toast.error('Failed to creat project!');
         }
     } catch (error) {
         console.error(error);
-        toast.error('Failed creating a project!')
+        toast.error('Failed creating a project!');
     }
 };
 

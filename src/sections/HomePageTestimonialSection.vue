@@ -16,13 +16,13 @@
                 <swiper-slide v-for="(testimonial, index) in testimonials" :key="index"
                     class="testimonial-slide p-8 rounded-lg">
                     <div class="testimonial-text-container h-32 mb-4 overflow-hidden text-ellipsis whitespace-normal">
-                        <p class="text italic text-gray-600">"{{ testimonial.quote }}"</p>
+                        <p class="text italic text-gray-600">"{{ testimonial?.quote }}"</p>
                     </div>
-                    <img :src="testimonial.image" alt="User Image" class="w-20 h-20 rounded-full mx-auto mb-4"
+                    <img :src="testimonial?.imageUrl" alt="User Image" class="w-20 h-20 rounded-full mx-auto mb-4"
                         loading="lazy" />
                     <div class="text-center">
-                        <p class="font-bold text-lg">{{ testimonial.name }}</p>
-                        <p class="text-sm text-gray-600">{{ testimonial.position }}</p>
+                        <p class="font-bold text-lg">{{ testimonial?.name }}</p>
+                        <p class="text-sm text-gray-600">{{ testimonial?.position }}</p>
                     </div>
                 </swiper-slide>
             </swiper>
@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -40,11 +40,22 @@ import { Pagination, Navigation, Autoplay } from 'swiper/modules';
 import { data } from '../constants';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useStore } from 'vuex';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const store = useStore();
 
-const testimonials = ref(data.testimonials);
+const fetchTestimonials = () => store.dispatch('testimonials/fetchTestimonials');
+
+const testimonialsFromServer = computed(() => store.state.testimonials.testimonials);
+
+const testimonialStaticData = ref(data.testimonials);
+
+// Logic to check which data to use
+const testimonials = computed(() => {
+    return testimonialsFromServer.value.length > 2 ? testimonialsFromServer.value : testimonialStaticData.value;
+})
 
 const modules = [Pagination, Navigation, Autoplay];
 
@@ -81,6 +92,8 @@ onMounted(() => {
             once: true,
         },
     });
+
+    fetchTestimonials();
 });
 
 </script>

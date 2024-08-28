@@ -170,7 +170,6 @@ const imageUploadInput = ref(null);
 // Computed properties
 const products = computed(() => store.state.products.products);
 const categories = computed(() => store.state.categories.categories);
-const projects = computed(() => store.state.projects.projects);
 const uploading = computed(() => store.state.products.uploading);
 
 
@@ -271,6 +270,8 @@ const saveProduct = async () => {
                 toast.error('failed to create to product!');
             }
 
+        } else {
+            toast.error('Failed, are you connected to internet?');
         }
     } catch (error) {
         console.error(error);

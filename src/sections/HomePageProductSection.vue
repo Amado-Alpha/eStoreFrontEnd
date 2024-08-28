@@ -12,20 +12,20 @@
             :autoplay="{ delay: 3000, disableOnInteraction: false }" :breakpoints="breakpoints" :modules="modules"
             class="mySwiper">
             <swiper-slide v-for="(product, index) in products" :key="index" class="product-slide p-8 rounded-lg">
-                <img :src="product.image" alt="Product Image" class="w-full h-64 object-fill mb-4 rounded-lg"
+                <img :src="product?.imageUrl" alt="Product Image" class="w-full h-64 object-fill mb-4 rounded-lg"
                     loading="lazy" />
                 <div class="product-text-container h-24 overflow-hidden text-ellipsis whitespace-normal">
-                    <p class="text-xl font-bold">{{ product.name }}</p>
-                    <p class="text-sm text-gray-600">{{ product.description }}</p>
+                    <p class="text-xl font-bold">{{ product?.name }}</p>
+                    <p class="text-sm text-gray-600">{{ product?.description }}</p>
                 </div>
                 <div class="flex justify-between items-center">
-                    <span class="text-xl font-bold text-gray-900">{{ product.price }}</span>
+                    <span class="text-xl font-bold text-gray-900">{{ formatPrice(product?.price) }}</span>
                     <div>
-                        <a :href="'https://wa.me/' + product.whatsapp" target="_blank" class="whatsapp-icon">
+                        <a :href="'https://wa.me/' + product?.whatsapp" target="_blank" class="whatsapp-icon">
                             <i
                                 class="fab fa-whatsapp text-3xl text-green-500 hover:text-green-800 transition-colors duration-300"></i>
                         </a>
-                        <a :href="'tel:' + product.phone" class="phone-icon">
+                        <a :href="'tel:' + product?.phone" class="phone-icon">
                             <i
                                 class="fas fa-phone text-3xl text-blue-500 hover:text-blue-800 transition-colors duration-300"></i>
                         </a>
@@ -37,7 +37,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -46,12 +46,39 @@ import { Pagination, Navigation, Autoplay } from 'swiper/modules';
 import { data } from '../constants';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useStore } from 'vuex';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const products = ref(data.products);
+const productStaticData = ref(data.products);
 
 const modules = [Pagination, Navigation, Autoplay];
+
+const store = useStore();
+const fetchProducts = () => store.dispatch('products/fetchProducts');
+
+const productsFromServer = computed(() => store.state.products.products);
+
+// Logic to check which data to use (From server or static)
+
+const products = computed(() => {
+    return productsFromServer.value.length > 3 ? productsFromServer.value : productStaticData.value;
+})
+
+// Formatting price
+const formatPrice = function (value) {
+    // Convert the value to a number to ensure correct formatting
+    let numericValue = parseFloat(value);
+
+    // Format the numeric value as Tanzanian Shillings
+    let formattedValue = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'TZS',
+    }).format(numericValue);
+
+    return formattedValue;
+}
+
 
 const breakpoints = {
     640: {
@@ -86,6 +113,8 @@ onMounted(() => {
             once: true,
         },
     });
+
+    fetchProducts();
 });
 
 </script>

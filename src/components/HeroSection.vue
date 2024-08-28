@@ -4,7 +4,7 @@
         <div class="absolute inset-0 bg-gradient-to-b from-green-700 via-green-600 to-green-500 opacity-80 z-10"></div>
 
         <!-- Left Side: Swiper with Pagination, Autoplay, and Loop -->
-        <div class="relative z-20 overflow-hidden row-span-1 col-span-1 mb-10">
+        <div class="relative z-20 overflow-hidden row-span-1 col-span-1">
             <swiper :pagination="{ clickable: true }" :autoplay="{ delay: 1000, disableOnInteraction: false }"
                 :loop="true" :speed="4000" :modules="modules" class="rounded-lg shadow-lg">
                 <swiper-slide v-for="(image, index) in slideImages" :key="index">
@@ -24,7 +24,7 @@
             class="container mx-auto relative z-20 flex flex-col justify-center row-span-1 col-span-1 text-white p-8 lg:p-16 w-full h-full md:h-96 backdrop-blur-sm">
             <div class="lg:mx-0 flex flex-col items-center lg:items-start space-y-6 lg:space-y-8 lg:mt-32">
                 <h1
-                    class="text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight mb-4 lg:mb-6 text-center lg:text-left drop-shadow-lg text-transparent bg-clip-text bg-gradient-to-r from-green-300 to-green-500">
+                    class="text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight mb-4 lg:mb-6 text-center lg:text-left drop-shadow-lg text-transparent bg-clip-text bg-gradient-to-r from-green-300 to-green-300">
                     Discover the Future of Electronics
                 </h1>
                 <p

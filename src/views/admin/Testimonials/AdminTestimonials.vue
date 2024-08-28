@@ -276,7 +276,6 @@ const saveTestimonial = async () => {
                 toast.success('Testimonial created successfully!');
                 fetchTestimonials();
             } else {
-                console.error(error);
                 toast.error('Failed to create testimonial');
             }
         }

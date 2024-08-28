@@ -30,7 +30,7 @@
                 <div v-for="(product, index) in (filteredProducts.length > 0 ? filteredPaginatedProducts : paginatedProducts)"
                     :key="index"
                     class="product-card bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                    <img :src="product.image" :alt="product.name"
+                    <img :src="product.imageUrl" :alt="product.name"
                         class="w-[400px] h-[300px] object-fill rounded-t-lg mb-4">
                     <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ product.name }}</h3>
                     <p class="text-gray-600 mb-4">{{ product.description }}</p>
@@ -66,16 +66,42 @@
 
 <script setup>
 
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import { data } from '../constants';
 import { oversight } from '../assets/icons';
 import HeroSectionProductsPage from '../components/HeroSectionProductsPage.vue';
+import { useStore } from 'vuex';
 
+
+const store = useStore();
 const searchQuery = ref('');
 const selectedCategory = ref('');
-const categories = ref(['Electronics', 'Computers', 'Tools']);
-const products = ref(data.products);
+const categoriesStaticData = ref(['Electronics', 'Computers', 'Tools']);
 
+// Static data
+const productStaticData = ref(data.products);
+
+const fetchCategories = () => store.dispatch('categories/fetchCategories');
+const fetchProducts = () => store.dispatch('products/fetchProducts');
+
+const productsFromServer = computed(() => store.state.products.products);
+const categoriesFromServer = computed(() => store.state.categories.categories);
+
+console.log('Products from server:', productsFromServer.value);
+
+watch(productsFromServer, () => {
+    console.log('Watched Products from server:', productsFromServer.value);
+});
+
+
+// Logic to check which data to use (static or fromServer)
+const products = computed(() => {
+    return productsFromServer.value.length > 0 ? productsFromServer.value : productStaticData.value;
+})
+
+const categories = computed(() => {
+    return categoriesFromServer.value.length > 0 ? categoriesFromServer.value : categoriesStaticData.value;
+})
 
 // Formatting price
 const formatPrice = function (value) {
@@ -182,12 +208,12 @@ const paginatedProducts = computed(() => {
     const startIndex = (currentPage.value - 1) * productsPerPage;
     const endIndex = currentPage.value * productsPerPage;
     return products.value.slice(startIndex, endIndex);
-})
+});
 
 // Total pages for unfiltered products
 const totalPagesUnfiltered = computed(() => Math.ceil(products.value.length / productsPerPage));
 
-// Total pages for filtered products
+// Total pages for filtered productsFromServer
 const totalPagesFiltered = computed(() => Math.ceil(filteredProducts.value.length / productsPerPage));
 
 watch(totalPagesFiltered, () => {
@@ -228,6 +254,10 @@ function scrollToPosition() {
     }
 }
 
+onMounted(() => {
+    fetchProducts();
+    fetchCategories();
+})
 </script>
 
 <style scoped>
